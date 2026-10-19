@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide 06 : Critique comparative</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../nav-hint.css">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+
+    <div class="slide">
+
+        <header class="slide__header">
+            <h1 class="slide__title">Critique comparative</h1>
+        </header>
+
+        <!-- Comparison Matrix -->
+        <div class="compare__matrix">
+            <div class="compare__header">
+                <div class="compare__cell compare__cell--label"></div>
+                <div class="compare__cell compare__cell--plat">Bankin'</div>
+                <div class="compare__cell compare__cell--plat">Revolut</div>
+                <div class="compare__cell compare__cell--plat">Erica (BoA)</div>
+                <div class="compare__cell compare__cell--plat">Traditionnelle</div>
+                <div class="compare__cell compare__cell--plat" style="color: #10b981; font-weight: 700;">FinBank</div>
+            </div>
+
+            <div class="compare__row" data-delay="0">
+                <div class="compare__cell compare__cell--label">Gestion multi-comptes</div>
+                <div class="compare__cell"><span class="dot dot--yes"></span></div>
+                <div class="compare__cell"><span class="dot dot--yes"></span></div>
+                <div class="compare__cell"><span class="dot dot--yes"></span></div>
+                <div class="compare__cell"><span class="dot dot--yes"></span></div>
+                <div class="compare__cell"><span class="dot dot--yes"></span></div>
+            </div>
+
+            <div class="compare__row" data-delay="1">
+                <div class="compare__cell compare__cell--label">Virements instantan&eacute;s</div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--yes"></span></div>
+                <div class="compare__cell"><span class="dot dot--yes"></span></div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--yes"></span></div>
+            </div>
+
+            <div class="compare__row" data-delay="2">
+                <div class="compare__cell compare__cell--label">Validation BPMN seuil (&gt; 5k)</div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--yes"></span></div>
+            </div>
+
+            <div class="compare__row" data-delay="3">
+                <div class="compare__cell compare__cell--label">D&eacute;voilement s&eacute;curis&eacute; cartes</div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--yes"></span></div>
+            </div>
+
+            <div class="compare__row" data-delay="4">
+                <div class="compare__cell compare__cell--label">Assistant IA bancaire RAG</div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--yes"></span></div>
+            </div>
+
+            <div class="compare__row" data-delay="5">
+                <div class="compare__cell compare__cell--label">Audit s&eacute;curit&eacute; immuable</div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--no"></span></div>
+                <div class="compare__cell"><span class="dot dot--yes"></span></div>
+            </div>
+
+        </div>
+
+        <!-- Critique Conclusion -->
+        <div class="critique" data-delay="7">
+            <p class="critique__text">
+                Les solutions actuelles imposent un compromis entre <strong>fluidit&eacute; exp&eacute;rientielle</strong> et <strong>gouvernance r&eacute;glementaire stricte</strong>.
+                <strong>FinBank</strong> r&eacute;concilie ces deux exigences en int&eacute;grant au sein d'une m&ecirc;me plateforme un <strong>moteur BPMN de validation des seuils sensibles</strong>,
+                une <strong>piste d'audit immuable</strong> et un <strong>assistant IA RAG</strong> &eacute;clairant les utilisateurs sur leurs op&eacute;rations.
+            </p>
+        </div>
+
+        <div class="navigation">
+            <span class="nav-year">08 / 34</span>
+        </div>
+
+    </div>
+
+    <script src="../slide-enter.js"></script>
+    <script src="script.js"></script>
+    <script src="../nav.js"></script>
+    <script src="../transition.js"></script>
+</body>
+</html>

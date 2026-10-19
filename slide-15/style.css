@@ -1,0 +1,819 @@
+/* ═══════════════════════════════════════════════════════════════
+   Slide 15 : Méthodologie Scrum & Sprint Cycle (FinBank Edition)
+   ═══════════════════════════════════════════════════════════════ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(160deg, #f0f4f8 0%, #f8fafc 50%, #eef2f7 100%);
+    color: #1e293b;
+    overflow: hidden;
+}
+
+/* ── Ambient Orbs ── */
+.ambient-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(110px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+}
+
+.orb-1 {
+    width: 520px;
+    height: 520px;
+    background: radial-gradient(circle, rgba(0, 102, 204, 0.18) 0%, transparent 70%);
+    top: -8%;
+    right: -5%;
+    animation: orbFloat1 28s ease-in-out infinite alternate, orbAppear 1.2s ease forwards;
+}
+
+.orb-2 {
+    width: 440px;
+    height: 440px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.16) 0%, transparent 70%);
+    bottom: -6%;
+    left: -6%;
+    animation: orbFloat2 32s ease-in-out infinite alternate, orbAppear 1.2s ease 0.3s forwards;
+}
+
+.orb-3 {
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(234, 88, 12, 0.12) 0%, transparent 70%);
+    top: 45%;
+    left: 40%;
+    animation: orbFloat3 36s ease-in-out infinite alternate, orbAppear 1.2s ease 0.6s forwards;
+}
+
+@keyframes orbAppear {
+    to { opacity: 1; }
+}
+
+@keyframes orbFloat1 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-35px, 45px); }
+}
+
+@keyframes orbFloat2 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(30px, -35px); }
+}
+
+@keyframes orbFloat3 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(25px, 25px); }
+}
+
+/* ── Background Canvas ── */
+#bg-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE LAYOUT
+   ═══════════════════════════════════════════════════════════════ */
+.slide {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.2vh 3.5vw 8vh;
+    gap: 1.8vh;
+    overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════════════════════ */
+.slide__header {
+    text-align: center;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(-16px);
+}
+
+.slide__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #0066cc;
+    background: rgba(0, 102, 204, 0.08);
+    border: 1px solid rgba(0, 102, 204, 0.2);
+    padding: 0.32rem 0.95rem;
+    border-radius: 100px;
+    margin-bottom: 0.5rem;
+}
+
+.slide__title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2.1rem, 3.2vw, 3.2rem);
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.slide__title::after {
+    content: '';
+    display: block;
+    width: 76px;
+    height: 4px;
+    background: linear-gradient(90deg, #0066cc 0%, #10b981 50%, #ea580c 100%);
+    border-radius: 4px;
+    margin: 8px auto 0;
+    transform: scaleX(0);
+    animation: lineGrow 0.7s ease 0.9s forwards;
+}
+
+@keyframes lineGrow {
+    to { transform: scaleX(1); }
+}
+
+.slide__subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.92rem, 1.15vw, 1.15rem);
+    font-weight: 400;
+    color: #64748b;
+    margin-top: 0.3rem;
+    opacity: 0;
+    transform: translateY(6px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTENT SPLIT
+   ═══════════════════════════════════════════════════════════════ */
+.content-split {
+    width: 100%;
+    max-width: 1620px;
+    display: grid;
+    grid-template-columns: 1.18fr 1fr;
+    gap: 2.4rem;
+    flex: 1;
+    min-height: 0;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(14px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   METHODOLOGY EVALUATION COLUMN (Left)
+   ═══════════════════════════════════════════════════════════════ */
+.methodo-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.methodo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.1rem;
+    align-content: center;
+    width: 100%;
+}
+
+/* ── Standard Candidate Cards (XP, RUP, 2TUP) ── */
+.methodo-card {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 18px;
+    padding: 1.15rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05), 0 2px 6px rgba(0, 102, 204, 0.04);
+    border: 1px solid rgba(0, 102, 204, 0.1);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+    position: relative;
+}
+
+.methodo-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 16px 36px rgba(0, 102, 204, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
+    border-color: rgba(0, 102, 204, 0.28);
+}
+
+.methodo-card__top {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.methodo-code {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #1e293b;
+    background: #e2e8f0;
+    padding: 0.32rem 0.6rem;
+    border-radius: 8px;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+}
+
+.methodo-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.methodo-badge {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.methodo-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.18;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── Pros & Cons Items ── */
+.methodo-procon {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.procon-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #475569;
+    line-height: 1.35;
+}
+
+.procon-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    font-size: 0.68rem;
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.procon-icon--pro {
+    background: rgba(16, 185, 129, 0.15);
+    color: #059669;
+}
+
+.procon-icon--con {
+    background: rgba(239, 68, 68, 0.12);
+    color: #dc2626;
+}
+
+/* ── Hero Selected Card (SCRUM FRAMEWORK) ── */
+.methodo-card--selected {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(240, 253, 244, 0.88) 100%);
+    border: 2px solid #10b981;
+    border-radius: 20px;
+    padding: 1.35rem 1.6rem;
+    box-shadow: 0 16px 42px rgba(16, 185, 129, 0.16), 0 0 0 1px rgba(16, 185, 129, 0.18);
+    position: relative;
+    overflow: visible;
+    transform: translateY(0) scale(1);
+}
+
+.methodo-card--selected:hover {
+    transform: translateY(-3px) scale(1.015);
+    box-shadow: 0 20px 48px rgba(16, 185, 129, 0.22), 0 0 0 2px rgba(16, 185, 129, 0.3);
+}
+
+.methodo-card__glow {
+    position: absolute;
+    inset: -10px;
+    border-radius: 28px;
+    background: radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.18), transparent 70%);
+    filter: blur(15px);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.methodo-ribbon {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.95rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.38);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    animation: ribbonPulse 3s ease-in-out infinite;
+}
+
+@keyframes ribbonPulse {
+    0%, 100% { transform: translateY(0); box-shadow: 0 4px 14px rgba(16, 185, 129, 0.38); }
+    50% { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5); }
+}
+
+.ribbon-star {
+    color: #fde047;
+    font-size: 0.85rem;
+}
+
+.methodo-code--scrum {
+    background: linear-gradient(135deg, #0066cc 0%, #0284c7 100%);
+    color: #ffffff;
+    font-size: 0.95rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 9px;
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.25);
+}
+
+.methodo-badge--selected {
+    color: #059669;
+    background: rgba(16, 185, 129, 0.12);
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    align-self: flex-start;
+}
+
+.methodo-card--selected .methodo-name {
+    font-size: 1.35rem;
+    color: #047857;
+}
+
+/* Scrum Hero Pros in 2x2 Grid */
+.methodo-card--selected .methodo-procon {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem 1.2rem;
+    margin-top: 0.2rem;
+}
+
+.procon-hero {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(16, 185, 129, 0.24);
+    border-radius: 10px;
+    padding: 0.52rem 0.85rem;
+    font-size: 0.86rem;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.procon-hero:hover {
+    background: #ffffff;
+    border-color: rgba(16, 185, 129, 0.45);
+}
+
+.procon-hero strong {
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.procon-icon--hero {
+    background: #10b981;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.35);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCRUM VISUAL & ENGINE (Right)
+   ═══════════════════════════════════════════════════════════════ */
+.scrum-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    opacity: 0;
+    transform: translateY(14px);
+}
+
+.scrum-engine-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-radius: 28px;
+    padding: 1.1rem 1.3rem 1.3rem;
+    box-shadow: 0 20px 48px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(0, 102, 204, 0.04);
+    border: 1px solid rgba(0, 102, 204, 0.14);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.scrum-engine-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.5rem 0.4rem;
+}
+
+.engine-badge-live {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #0284c7;
+    letter-spacing: 0.08em;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 10px #10b981;
+    animation: livePulse 2s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.engine-cadence-chip {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #ea580c;
+    background: rgba(234, 88, 12, 0.08);
+    border: 1px solid rgba(234, 88, 12, 0.2);
+    padding: 0.28rem 0.8rem;
+    border-radius: 100px;
+}
+
+/* ── 500x500 Sprint Cycle Orbit Container ── */
+.scrum-cycle-container {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cycle-svg-highway {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hub-line {
+    transition: stroke 0.3s ease, stroke-width 0.3s ease, stroke-dasharray 0.3s ease, opacity 0.3s ease;
+}
+
+.hub-line.active {
+    stroke-width: 2.8px !important;
+    stroke-dasharray: none !important;
+    opacity: 1 !important;
+    filter: drop-shadow(0 0 6px currentColor);
+}
+
+/* ── Central Command Hub ── */
+.scrum-center-hub {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+}
+
+.hub-rings {
+    position: absolute;
+    inset: -14px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 102, 204, 0.12) 0%, transparent 70%);
+    animation: hubPulse 3.5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes hubPulse {
+    0%, 100% { transform: scale(0.96); opacity: 0.6; }
+    50% { transform: scale(1.08); opacity: 1; }
+}
+
+.hub-core {
+    width: 138px;
+    height: 138px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+    border: 3px solid rgba(0, 102, 204, 0.4);
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.35), 0 0 24px rgba(0, 102, 204, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    color: #ffffff;
+    text-align: center;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+}
+
+.hub-core:hover {
+    transform: scale(1.04);
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.45), 0 0 32px rgba(0, 102, 204, 0.4);
+}
+
+.hub-icon-wrap {
+    color: #38bdf8;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: hubIconSpin 16s linear infinite;
+}
+
+@keyframes hubIconSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hub-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.hub-duration {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #10b981;
+}
+
+.hub-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 1px;
+}
+
+/* ── 6 Clockwise Agile Stage Pods ── */
+.cycle-pod {
+    position: absolute;
+    left: var(--pos-x);
+    top: var(--pos-y);
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 102, 204, 0.14);
+    border-radius: 14px;
+    padding: 0.48rem 0.85rem 0.48rem 0.55rem;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07), 0 2px 6px rgba(0, 102, 204, 0.03);
+    transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+    cursor: default;
+    user-select: none;
+}
+
+.cycle-pod:hover {
+    transform: translate(-50%, -53%) scale(1.06);
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.14), 0 0 16px rgba(0, 102, 204, 0.15);
+    border-color: rgba(0, 102, 204, 0.35);
+    z-index: 10;
+}
+
+.pod-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 0.22rem 0.45rem;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.pod-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.pod-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.pod-icon--blue {
+    background: rgba(0, 102, 204, 0.12);
+    color: #0066cc;
+}
+
+.pod-icon--cyan {
+    background: rgba(2, 132, 199, 0.12);
+    color: #0284c7;
+}
+
+.pod-icon--emerald {
+    background: rgba(16, 185, 129, 0.14);
+    color: #10b981;
+}
+
+.pod-icon--amber {
+    background: rgba(245, 158, 11, 0.14);
+    color: #d97706;
+}
+
+.pod-icon--orange {
+    background: rgba(234, 88, 12, 0.12);
+    color: #ea580c;
+}
+
+.pod-icon--indigo {
+    background: rgba(99, 102, 241, 0.12);
+    color: #6366f1;
+}
+
+.pod-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.pod-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.15;
+}
+
+.pod-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #64748b;
+    white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   NAVIGATION FOOTER
+   ═══════════════════════════════════════════════════════════════ */
+.navigation {
+    position: fixed;
+    bottom: 1.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    opacity: 0;
+}
+
+.nav-year {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #64748b;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 0.55rem 1.35rem;
+    border-radius: 14px;
+    border: 1px solid rgba(0, 102, 204, 0.14);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE DESIGN & VIEWPORT ADAPTATIONS
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 1366px) {
+    .content-split {
+        gap: 1.8rem;
+    }
+    .scrum-cycle-container {
+        width: 450px;
+        height: 450px;
+        transform: scale(0.92);
+    }
+    .methodo-name {
+        font-size: 1rem;
+    }
+    .procon-item {
+        font-size: 0.78rem;
+    }
+}
+
+@media (max-height: 850px) {
+    .slide {
+        padding: 1.5vh 3vw 6.5vh;
+        gap: 1.2vh;
+    }
+    .scrum-engine-card {
+        padding: 0.9rem 1.1rem 1.1rem;
+    }
+    .scrum-cycle-container {
+        width: 440px;
+        height: 440px;
+        transform: scale(0.9);
+    }
+    .methodo-card {
+        padding: 1rem 0.95rem;
+        gap: 0.65rem;
+    }
+    .methodo-card--selected {
+        padding: 1.1rem 1.3rem;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+    .ambient-orb,
+    .slide__header,
+    .slide__title,
+    .slide__subtitle,
+    .content-split,
+    .methodo-grid,
+    .methodo-card,
+    .scrum-visual,
+    .navigation,
+    .methodo-ribbon,
+    .hub-rings,
+    .hub-icon-wrap,
+    .live-dot {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+}

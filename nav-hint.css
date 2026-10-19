@@ -1,0 +1,210 @@
+/* ═══════════════════════════════════════════════════════════
+   FinBank – Shared UI Shell & Fintech Micro-Animations
+   Injected across all 34 slides for consistent banking theme
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Host / Partner Logo (Top Right) ── */
+.slide-logo {
+    position: fixed;
+    top: 1.1rem;
+    right: 1.3rem;
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    z-index: 200;
+    opacity: 0;
+    border-radius: 10px !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    padding: 4px;
+    box-shadow: 0 6px 20px rgba(0, 102, 204, 0.14), 0 0 0 1px rgba(0, 102, 204, 0.18) !important;
+    animation: finbankLogoIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards, finbankLogoFloat 6s ease-in-out 1.2s infinite alternate !important;
+    pointer-events: auto;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease !important;
+}
+.slide-logo:hover {
+    transform: translateY(-2px) scale(1.05) !important;
+    box-shadow: 0 10px 26px rgba(0, 102, 204, 0.22), 0 0 0 1.5px rgba(232, 97, 26, 0.4) !important;
+}
+@keyframes finbankLogoIn {
+    0%   { opacity: 0; transform: translateY(-16px) scale(0.85); filter: blur(4px); }
+    70%  { opacity: 0.95; transform: translateY(1px) scale(1.02); filter: blur(0px); }
+    100% { opacity: 0.98; transform: translateY(0) scale(1); filter: blur(0px); }
+}
+@keyframes finbankLogoFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-4px); }
+}
+
+/* ── FinBank Ambient Orbs Palette (Banking Blue, Emerald, Vermeg Amber) ── */
+.ambient-orb.orb-1 {
+    background: radial-gradient(circle, rgba(0, 102, 204, 0.22) 0%, transparent 70%) !important;
+}
+.ambient-orb.orb-2 {
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, transparent 70%) !important;
+}
+.ambient-orb.orb-3 {
+    background: radial-gradient(circle, rgba(234, 88, 12, 0.13) 0%, transparent 70%) !important;
+}
+
+/* ── High-Precision Fintech Page Counter Pill ── */
+.navigation {
+    position: fixed !important;
+    bottom: 1.35rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 200 !important;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.nav-year {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.28rem !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.86rem !important;
+    font-weight: 600 !important;
+    color: #0f172a !important;
+    letter-spacing: 0.03em !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    padding: 0.5rem 1.35rem !important;
+    border-radius: 100px !important;
+    border: 1px solid rgba(0, 102, 204, 0.20) !important;
+    box-shadow: 0 8px 26px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.8) inset !important;
+    transition: all 0.3s ease !important;
+}
+.nav-year:hover {
+    border-color: rgba(0, 102, 204, 0.4) !important;
+    box-shadow: 0 10px 30px rgba(0, 102, 204, 0.15) !important;
+}
+
+.nav-current {
+    font-weight: 800;
+    font-size: 0.98rem;
+    color: #0066cc !important;
+}
+.nav-sep {
+    color: #94a3b8;
+    font-weight: 400;
+}
+.nav-total {
+    color: #64748b;
+}
+
+/* ── Live Fintech Progress Bar ── */
+#srtv-progress, #finbank-progress {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    height: 3.5px !important;
+    z-index: 9000 !important;
+    background: linear-gradient(90deg, #0066cc 0%, #0284c7 35%, #10b981 75%, #ea580c 100%) !important;
+    border-radius: 0 4px 4px 0 !important;
+    box-shadow: 0 0 12px rgba(0, 102, 204, 0.6), 0 0 4px rgba(16, 185, 129, 0.8) !important;
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease !important;
+}
+
+/* ── Fintech Micro-Interactions on Interactive Cards & Components ── */
+.plan__card,
+.module__card,
+.feature-card,
+.persp-card,
+.sprint-card,
+.device,
+.concl-summary,
+.merci-info,
+.demo-feature,
+.crit-row,
+.arch-card,
+.cicd-step {
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-color 0.3s ease !important;
+}
+
+.plan__card:hover,
+.module__card:hover,
+.feature-card:hover,
+.persp-card:hover,
+.sprint-card:hover,
+.demo-feature:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 14px 34px rgba(0, 102, 204, 0.12), 0 4px 12px rgba(16, 185, 129, 0.08) !important;
+    border-color: rgba(0, 102, 204, 0.32) !important;
+}
+
+/* ── Section Title & Number Glowing Accent ── */
+.section__number {
+    background: linear-gradient(135deg, #0066cc 0%, #0284c7 50%, #10b981 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    filter: drop-shadow(0 4px 18px rgba(0, 102, 204, 0.25));
+}
+
+.section__line {
+    background: linear-gradient(90deg, #0066cc 0%, #10b981 50%, #ea580c 100%) !important;
+    box-shadow: 0 0 12px rgba(0, 102, 204, 0.4);
+    animation: finbankLineExpand 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes finbankLineExpand {
+    from { width: 0; opacity: 0; }
+    to   { width: 120px; opacity: 1; }
+}
+
+/* ── Holographic Financial Card Reflection ── */
+.plan__card, .module__card, .feature-card, .sprint-card, .persp-card {
+    position: relative;
+    overflow: hidden;
+}
+.plan__card::after, .module__card::after, .feature-card::after, .sprint-card::after, .persp-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.03) 45%, rgba(0,102,204,0.06) 50%, rgba(16,185,129,0.04) 55%, rgba(255,255,255,0) 100%);
+    transform: rotate(35deg) translateY(-100%);
+    transition: transform 0.8s ease;
+    pointer-events: none;
+}
+.plan__card:hover::after, .module__card:hover::after, .feature-card:hover::after, .sprint-card:hover::after, .persp-card:hover::after {
+    transform: rotate(35deg) translateY(100%);
+}
+
+/* ── Desktop Swipe Hint ── */
+@media (hover: hover) {
+    body::after {
+        content: '← → FinBank';
+        position: fixed;
+        bottom: 1.35rem;
+        right: 1.6rem;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.68rem;
+        font-weight: 600;
+        color: #94a3b8;
+        letter-spacing: 0.08em;
+        opacity: 0;
+        animation: hintIn 0.6s ease 3s forwards;
+        pointer-events: none;
+        z-index: 100;
+    }
+    @keyframes hintIn {
+        from { opacity: 0; transform: translateY(4px); }
+        to   { opacity: 0.65; transform: translateY(0); }
+    }
+}
+
+/* ── Reduced motion override ── */
+@media (prefers-reduced-motion: reduce) {
+    .slide-logo,
+    .navigation,
+    #srtv-progress,
+    .section__line {
+        animation: none !important;
+        transition: none !important;
+    }
+}

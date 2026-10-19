@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide 18 : Stack &amp; environnement FinBank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../nav-hint.css">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+
+    <div class="slide">
+
+        <header class="slide__header">
+            <h1 class="slide__title">Stack &amp; environnement FinBank</h1>
+            <p class="slide__subtitle">Technologies du projet, RAG local et poste utilis&eacute;</p>
+        </header>
+
+        <!-- Stack Technique -->
+        <div class="category" data-delay="1">
+            <div class="category__label">Stack Technique &amp; Frameworks</div>
+            <div class="category__grid category__grid--stack">
+                <div class="tech__card" data-delay="0">
+                    <div class="tech__logo-box">
+                        <img src="../assets/spring_boot.png" alt="Spring Boot 3" class="tech__logo">
+                    </div>
+                    <div class="tech__info">
+                        <span class="tech__name">Spring Boot 3</span>
+                        <span class="tech__role">Java 21 &middot; API REST</span>
+                    </div>
+                </div>
+                <div class="tech__card" data-delay="1">
+                    <div class="tech__logo-box">
+                        <img src="../assets/flowable.jpg" alt="Flowable BPMN" class="tech__logo">
+                    </div>
+                    <div class="tech__info">
+                        <span class="tech__name">Flowable BPMN</span>
+                        <span class="tech__role">Moteur de Workflows</span>
+                    </div>
+                </div>
+                <div class="tech__card" data-delay="2">
+                    <div class="tech__logo-box">
+                        <img src="../assets/postgres.png" alt="PostgreSQL" class="tech__logo">
+                    </div>
+                    <div class="tech__info">
+                        <span class="tech__name">PostgreSQL</span>
+                        <span class="tech__role">Base ACID Relationnelle</span>
+                    </div>
+                </div>
+                <div class="tech__card" data-delay="3">
+                    <div class="tech__logo-box">
+                        <img src="../assets/react.png" alt="React 19" class="tech__logo">
+                    </div>
+                    <div class="tech__info">
+                        <span class="tech__name">React 19 + TS</span>
+                        <span class="tech__role">Front-end Web SPA</span>
+                    </div>
+                </div>
+                <div class="tech__card" data-delay="4">
+                    <div class="tech__logo-box">
+                        <img src="../assets/redis.png" alt="Redis" class="tech__logo">
+                    </div>
+                    <div class="tech__info">
+                        <span class="tech__name">Redis</span>
+                        <span class="tech__role">Cache distribu&eacute; &amp; Sessions</span>
+                    </div>
+                </div>
+                <div class="tech__card" data-delay="5">
+                    <div class="tech__logo-box">
+                        <img src="../assets/docker-logo.png" alt="Docker Compose" class="tech__logo">
+                    </div>
+                    <div class="tech__info">
+                        <span class="tech__name">Docker Compose</span>
+                        <span class="tech__role">Conteneurisation</span>
+                    </div>
+                </div>
+                <div class="tech__card" data-delay="6">
+                    <div class="tech__logo-box">
+                        <img src="../assets/kafka.jpg" alt="Apache Kafka" class="tech__logo">
+                    </div>
+                    <div class="tech__info">
+                        <span class="tech__name">Apache Kafka</span>
+                        <span class="tech__role">Event Streaming &amp; Broker</span>
+                    </div>
+                </div>
+                <div class="tech__card" data-delay="7">
+                    <div class="tech__logo-box">
+                        <img src="../assets/jwt.png" alt="Spring Security JWT" class="tech__logo">
+                    </div>
+                    <div class="tech__info">
+                        <span class="tech__name">Spring Security</span>
+                        <span class="tech__role">JWT &amp; RBAC S&eacute;curis&eacute;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IA & RAG local -->
+        <div class="category" data-delay="2">
+            <div class="category__label">Intelligence artificielle &amp; RAG local</div>
+            <div class="category__grid category__grid--streaming">
+                <div class="tech__card" data-delay="0">
+                    <div class="tech__logo-box">
+                        <img src="../assets/ollama.png" alt="Ollama" class="tech__logo">
+                    </div>
+                    <div class="tech__info">
+                        <span class="tech__name">Ollama · Qwen 2.5:7B</span>
+                        <span class="tech__role">LLM exécuté en local</span>
+                    </div>
+                </div>
+                <div class="tech__card" data-delay="1">
+                    <div class="tech__logo-box"><span class="tech__icon tech__icon--blue">Py</span></div>
+                    <div class="tech__info">
+                        <span class="tech__name">Python</span>
+                        <span class="tech__role">Service IA &amp; traitement RAG</span>
+                    </div>
+                </div>
+                <div class="tech__card" data-delay="2">
+                    <div class="tech__logo-box">
+                        <img src="../assets/rag.png" alt="Recherche documentaire RAG" class="tech__logo">
+                    </div>
+                    <div class="tech__info">
+                        <span class="tech__name">RAG documentaire</span>
+                        <span class="tech__role">TF-IDF &amp; similarit&eacute; cosinus</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outils -->
+        <div class="category" data-delay="3">
+            <div class="category__label">Outils de Conception &amp; D&eacute;veloppement</div>
+            <div class="category__grid category__grid--tools">
+                <div class="tool__chip" data-delay="0">
+                    <div class="tool__logo-box">
+                        <img src="../assets/intellij.jpg" alt="IntelliJ IDEA" class="tool__logo">
+                    </div>
+                    <span class="tool__name">IntelliJ IDEA</span>
+                </div>
+                <div class="tool__chip" data-delay="1">
+                    <div class="tool__logo-box">
+                        <img src="../assets/camunda_modelar.png" alt="Camunda Modeler" class="tool__logo">
+                    </div>
+                    <span class="tool__name">Camunda Modeler</span>
+                </div>
+                <div class="tool__chip" data-delay="2">
+                    <div class="tool__logo-box">
+                        <img src="../assets/postman.png" alt="Postman" class="tool__logo">
+                    </div>
+                    <span class="tool__name">Postman</span>
+                </div>
+                <div class="tool__chip" data-delay="3">
+                    <div class="tool__logo-box">
+                        <img src="../assets/github_actions.png" alt="GitHub Actions" class="tool__logo">
+                    </div>
+                    <span class="tool__name">GitHub Actions</span>
+                </div>
+                <div class="tool__chip" data-delay="4">
+                    <div class="tool__logo-box">
+                        <img src="../assets/draw.io.png" alt="draw.io" class="tool__logo">
+                    </div>
+                    <span class="tool__name">draw.io</span>
+                </div>
+                <div class="tool__chip" data-delay="5">
+                    <div class="tool__logo-box">
+                        <img src="../assets/github.png" alt="Git &amp; GitHub" class="tool__logo">
+                    </div>
+                    <span class="tool__name">Git &amp; GitHub</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Environnement -->
+        <div class="category" data-delay="4">
+            <div class="category__label">Poste de d&eacute;veloppement &amp; environnement</div>
+            <div class="env__grid">
+                <div class="env__card env__card--hardware" data-delay="0">
+                    <div class="env__icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+                    </div>
+                    <div class="env__info">
+                        <span class="env__name">Lenovo 82K1 &middot; poste de d&eacute;veloppement</span>
+                        <span class="env__spec">Windows 11 Famille Mono Langue &middot; version 10.0.22631</span>
+                        <span class="env__spec">AMD Ryzen s&eacute;rie 7000 &middot; AMD Radeon int&eacute;gr&eacute; + NVIDIA d&eacute;di&eacute;</span>
+                        <span class="env__spec">16 Go de RAM &middot; SSD de 1 To</span>
+                    </div>
+                </div>
+                <div class="env__card" data-delay="1">
+                    <div class="env__icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
+                    </div>
+                    <div class="env__info">
+                        <span class="env__name">Architecture Conteneuris&eacute;e</span>
+                        <span class="env__spec">Stack Docker multi-conteneurs &middot; R&eacute;seau isol&eacute; &middot; Volumes persistants</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <span class="nav-year">18 / 34</span>
+        </div>
+
+    </div>
+
+    <script src="../slide-enter.js"></script>
+    <script src="script.js"></script>
+    <script src="../nav.js"></script>
+    <script src="../transition.js"></script>
+</body>
+</html>

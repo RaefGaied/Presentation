@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide 02 : Plan de la Présentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../nav-hint.css">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+
+    <div class="plan">
+        <header class="plan__header">
+            <span class="plan__eyebrow">AGENDA DE SOUTENANCE</span>
+            <h1 class="plan__title">Plan de la Présentation</h1>
+            <p class="plan__subtitle">Structure et feuille de route de la soutenance FinBank</p>
+        </header>
+
+        <div class="plan__grid">
+            <!-- 01 : Introduction -->
+            <div class="plan__card" data-index="1">
+                <div class="plan__card-top">
+                    <span class="plan__num plan__num--blue">01</span>
+                    <span class="plan__part-tag">Partie 01</span>
+                </div>
+                <h3 class="plan__card-title">Introduction Générale</h3>
+                <span class="plan__card-scope">Cadre &amp; Enjeux bancaires</span>
+                <div class="plan__card-bar plan__card-bar--blue"></div>
+            </div>
+
+            <!-- 02 : Contexte & Problématique -->
+            <div class="plan__card" data-index="2">
+                <div class="plan__card-top">
+                    <span class="plan__num plan__num--indigo">02</span>
+                    <span class="plan__part-tag">Partie 02</span>
+                </div>
+                <h3 class="plan__card-title">Contexte &amp; Problématique</h3>
+                <span class="plan__card-scope">Étude existant &amp; Limites</span>
+                <div class="plan__card-bar plan__card-bar--indigo"></div>
+            </div>
+
+            <!-- 03 : Analyse des Besoins -->
+            <div class="plan__card" data-index="3">
+                <div class="plan__card-top">
+                    <span class="plan__num plan__num--purple">03</span>
+                    <span class="plan__part-tag">Partie 03</span>
+                </div>
+                <h3 class="plan__card-title">Analyse des Besoins</h3>
+                <span class="plan__card-scope">Fonctionnels &amp; Exigences BCT</span>
+                <div class="plan__card-bar plan__card-bar--purple"></div>
+            </div>
+
+            <!-- 04 : Solution FinBank -->
+            <div class="plan__card" data-index="4">
+                <div class="plan__card-top">
+                    <span class="plan__num plan__num--cyan">04</span>
+                    <span class="plan__part-tag">Partie 04</span>
+                </div>
+                <h3 class="plan__card-title">Solution FinBank</h3>
+                <span class="plan__card-scope">Piliers &amp; Valeur ajoutée</span>
+                <div class="plan__card-bar plan__card-bar--cyan"></div>
+            </div>
+
+            <!-- 05 : Architecture & Conception -->
+            <div class="plan__card" data-index="5">
+                <div class="plan__card-top">
+                    <span class="plan__num plan__num--emerald">05</span>
+                    <span class="plan__part-tag">Partie 05</span>
+                </div>
+                <h3 class="plan__card-title">Architecture &amp; Conception</h3>
+                <span class="plan__card-scope">Scrum, Cas d'usage &amp; Classes</span>
+                <div class="plan__card-bar plan__card-bar--emerald"></div>
+            </div>
+
+            <!-- 06 : Interfaces Utilisateur -->
+            <div class="plan__card" data-index="6">
+                <div class="plan__card-top">
+                    <span class="plan__num plan__num--teal">06</span>
+                    <span class="plan__part-tag">Partie 06</span>
+                </div>
+                <h3 class="plan__card-title">Interfaces &amp; Expérience</h3>
+                <span class="plan__card-scope">Dashboard, Cartes &amp; RAG</span>
+                <div class="plan__card-bar plan__card-bar--teal"></div>
+            </div>
+
+            <!-- 07 : CI / CD & Déploiement -->
+            <div class="plan__card" data-index="7">
+                <div class="plan__card-top">
+                    <span class="plan__num plan__num--orange">07</span>
+                    <span class="plan__part-tag">Partie 07</span>
+                </div>
+                <h3 class="plan__card-title">CI / CD &amp; Déploiement</h3>
+                <span class="plan__card-scope">Pipeline Actions &amp; Docker</span>
+                <div class="plan__card-bar plan__card-bar--orange"></div>
+            </div>
+
+            <!-- 08 : Conclusion & Perspectives -->
+            <div class="plan__card" data-index="8">
+                <div class="plan__card-top">
+                    <span class="plan__num plan__num--rose">08</span>
+                    <span class="plan__part-tag">Partie 08</span>
+                </div>
+                <h3 class="plan__card-title">Conclusion &amp; Perspectives</h3>
+                <span class="plan__card-scope">Bilan &amp; Évolutions futures</span>
+                <div class="plan__card-bar plan__card-bar--rose"></div>
+            </div>
+
+            <!-- 09 : Démonstration -->
+            <div class="plan__card plan__card--demo" data-index="9">
+                <div class="plan__card-top">
+                    <span class="plan__num plan__num--amber">09</span>
+                    <span class="plan__part-tag plan__part-tag--live">En Direct</span>
+                </div>
+                <h3 class="plan__card-title">Démonstration Live</h3>
+                <span class="plan__card-scope">Scénario interactif temps réel</span>
+                <div class="plan__card-bar plan__card-bar--amber"></div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <span class="nav-year">02 / 34</span>
+        </div>
+    </div>
+
+    <script src="../slide-enter.js"></script>
+    <script src="script.js"></script>
+    <script src="../nav.js"></script>
+    <script src="../transition.js"></script>
+</body>
+</html>

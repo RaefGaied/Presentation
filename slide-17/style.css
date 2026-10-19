@@ -1,0 +1,443 @@
+/* Slide 17 : Conception — Cas d'utilisation & Diagramme de classes */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(160deg, #f0f4f8 0%, #f8fafc 50%, #eef2f7 100%);
+    color: #1e293b;
+    overflow: hidden;
+}
+
+/* ── Ambient Orbs ── */
+.ambient-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+}
+.orb-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0,102,204,0.2) 0%, transparent 70%);
+    top: -10%; right: -5%;
+    animation: orbFloat1 28s ease-in-out infinite alternate, orbAppear 1.2s ease forwards;
+}
+.orb-2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(16,185,129,0.18) 0%, transparent 70%);
+    bottom: -8%; left: -8%;
+    animation: orbFloat2 32s ease-in-out infinite alternate, orbAppear 1.2s ease 0.3s forwards;
+}
+.orb-3 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(234,88,12,0.14) 0%, transparent 70%);
+    top: 40%; left: 35%;
+    animation: orbFloat3 36s ease-in-out infinite alternate, orbAppear 1.2s ease 0.6s forwards;
+}
+@keyframes orbAppear { to { opacity: 1; } }
+@keyframes orbFloat1 { 0%{transform:translate(0,0)} 100%{transform:translate(-40px,50px)} }
+@keyframes orbFloat2 { 0%{transform:translate(0,0)} 100%{transform:translate(30px,-40px)} }
+@keyframes orbFloat3 { 0%{transform:translate(0,0)} 100%{transform:translate(20px,30px)} }
+
+/* ── Background Canvas ── */
+#bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE
+   ═══════════════════════════════════════════════════════════════ */
+.slide {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.8vh 3.5vw 7.5vh;
+    gap: 1.6vh;
+    overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════════════════════ */
+.slide__header {
+    text-align: center;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.slide__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #0066cc;
+    background: rgba(0, 102, 204, 0.08);
+    border: 1px solid rgba(0, 102, 204, 0.2);
+    padding: 0.3rem 0.9rem;
+    border-radius: 100px;
+    margin-bottom: 0.4rem;
+    transition: all 0.3s ease;
+}
+
+.slide__title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1.8rem, 2.6vw, 2.5rem);
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.slide__title::after {
+    content: '';
+    display: block;
+    width: 75px;
+    height: 4px;
+    background: linear-gradient(90deg, #0066cc, #10b981, #ea580c);
+    border-radius: 3px;
+    margin: 8px auto 0;
+    transform: scaleX(0);
+    animation: lineGrow 0.7s ease 0.8s forwards;
+}
+@keyframes lineGrow { to { transform: scaleX(1); } }
+
+.slide__subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.85rem, 1.1vw, 1.02rem);
+    font-weight: 400;
+    color: #64748b;
+    margin-top: 0.3rem;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* ── Conception Stepper Switcher ── */
+.conception-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.85rem;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(0, 102, 204, 0.14);
+    border-radius: 100px;
+    padding: 0.35rem 0.6rem;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+}
+
+.conception-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 100px;
+    padding: 0.42rem 1.1rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+    color: #64748b;
+}
+
+.conception-tab:hover {
+    color: #0f172a;
+    background: rgba(0, 102, 204, 0.05);
+}
+
+.conception-tab.is-active {
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.12), rgba(16, 185, 129, 0.12));
+    border-color: rgba(0, 102, 204, 0.28);
+    color: #0066cc;
+    box-shadow: 0 2px 10px rgba(0, 102, 204, 0.1);
+}
+
+.tab-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.18rem 0.5rem;
+    border-radius: 6px;
+    background: rgba(100, 116, 139, 0.12);
+    color: #475569;
+    transition: all 0.25s ease;
+}
+
+.conception-tab.is-active .tab-badge {
+    background: #0066cc;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 102, 204, 0.35);
+}
+
+.tab-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.15;
+}
+
+.tab-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.tab-meta {
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: #94a3b8;
+}
+
+.conception-tab.is-active .tab-meta {
+    color: #059669;
+}
+
+.conception-nav-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    opacity: 0.6;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DIAGRAM VIEWPORT
+   ═══════════════════════════════════════════════════════════════ */
+.uc-section {
+    width: 95vw;
+    max-width: 1560px;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(18px);
+    position: relative;
+}
+
+.uc-container {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 1.2rem;
+    box-shadow: 0 16px 42px rgba(15, 23, 42, 0.07), inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 102, 204, 0.12);
+    overflow: auto;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.uc-container::-webkit-scrollbar { width: 8px; height: 8px; }
+.uc-container::-webkit-scrollbar-track { background: transparent; }
+.uc-container::-webkit-scrollbar-thumb { background: rgba(0, 102, 204, 0.2); border-radius: 4px; }
+.uc-container::-webkit-scrollbar-thumb:hover { background: rgba(0, 102, 204, 0.4); }
+
+/* Diagram Panes */
+.diagram-pane {
+    display: none;
+    width: 100%;
+    min-height: 100%;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.diagram-pane.is-active {
+    display: flex;
+    animation: paneFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes paneFadeIn {
+    from { opacity: 0; transform: scale(0.985); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.uc-zoom-wrapper {
+    display: inline-block;
+    transform-origin: center top;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: zoom-in;
+    touch-action: none;
+    margin: auto;
+}
+
+.uc-zoom-wrapper.panning {
+    cursor: grabbing !important;
+}
+
+.uc-diagram {
+    max-width: none;
+    max-height: none;
+    width: auto;
+    height: auto;
+    min-width: 650px;
+    max-height: 62vh;
+    display: block;
+    border-radius: 10px;
+    pointer-events: none;
+    user-select: none;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+    background: #ffffff;
+}
+
+#classDiagram {
+    min-width: 780px;
+    max-height: 63vh;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FLOATING TOOLBAR
+   ═══════════════════════════════════════════════════════════════ */
+.diagram-toolbar {
+    position: absolute;
+    bottom: 18px;
+    right: 22px;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(0, 102, 204, 0.18);
+    border-radius: 100px;
+    padding: 0.32rem 0.6rem;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+}
+
+.tool-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 102, 204, 0.12);
+    background: #f8fafc;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tool-btn:hover {
+    background: #0066cc;
+    color: #ffffff;
+    border-color: #0066cc;
+    transform: scale(1.06);
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+}
+
+.tool-btn--text {
+    width: auto;
+    height: 32px;
+    border-radius: 100px;
+    padding: 0 0.85rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.1), rgba(16, 185, 129, 0.1));
+    color: #0066cc;
+    border-color: rgba(0, 102, 204, 0.22);
+}
+
+.tool-btn--text:hover {
+    background: linear-gradient(135deg, #0066cc, #10b981);
+    color: #ffffff;
+    border-color: transparent;
+}
+
+.zoom-level {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #475569;
+    min-width: 44px;
+    text-align: center;
+}
+
+.toolbar-sep {
+    width: 1px;
+    height: 18px;
+    background: rgba(0, 102, 204, 0.15);
+    margin: 0 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   NAVIGATION FOOTER
+   ═══════════════════════════════════════════════════════════════ */
+.navigation {
+    position: fixed;
+    bottom: 1.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    opacity: 0;
+}
+
+.nav-year {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 0.55rem 1.35rem;
+    border-radius: 14px;
+    border: 1px solid rgba(0,102,204,0.14);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE & REDUCED MOTION
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-height: 850px) {
+    .slide {
+        padding: 1.4vh 2.5vw 6.8vh;
+        gap: 1.2vh;
+    }
+    .slide__title {
+        font-size: 1.9rem;
+    }
+    .uc-diagram {
+        max-height: 56vh;
+    }
+    #classDiagram {
+        max-height: 57vh;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ambient-orb,
+    .slide__header,
+    .slide__title,
+    .slide__subtitle,
+    .uc-section,
+    .navigation {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+}

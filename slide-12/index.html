@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide 12 : Analyse et spécification des besoins</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../nav-hint.css">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+
+    <div class="slide">
+
+        <header class="slide__header">
+            <h1 class="slide__title">Analyse et spécification des besoins</h1>
+        </header>
+
+        <div class="needs-table">
+            <div class="needs-table__header">
+                <div class="needs-table__badge">
+                    <span class="needs-table__badge-dot"></span>
+                    Besoins fonctionnels par acteur
+                </div>
+            </div>
+
+            <div class="needs-table__grid">
+                <div class="needs-table__row needs-table__row--head">
+                    <div class="needs-table__cell">Acteur</div>
+                    <div class="needs-table__cell">R&ocirc;le principal</div>
+                    <div class="needs-table__cell">Besoins fonctionnels cl&eacute;s</div>
+                </div>
+
+                <div class="needs-table__row needs-table__row--emerald" data-delay="0">
+                    <div class="needs-table__cell needs-table__cell--actor">
+                        <span class="needs-table__dot needs-table__dot--emerald"></span>
+                        Client Bancaire
+                    </div>
+                    <div class="needs-table__cell needs-table__cell--role">Utilisateur des services financiers</div>
+                    <div class="needs-table__cell needs-table__cell--needs">
+                        <ul class="needs-table__list">
+                            <li>Consultation des comptes, soldes en temps r&eacute;el et historique</li>
+                            <li>Ex&eacute;cution de virements (alerte automatique si &gt; seuil)</li>
+                            <li>Gestion des cartes &amp; d&eacute;voilement s&eacute;curis&eacute; (CVV/num&eacute;ro)</li>
+                            <li>Interaction avec l'assistant IA RAG sur les r&egrave;gles et plafonds</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="needs-table__row needs-table__row--indigo" data-delay="1">
+                    <div class="needs-table__cell needs-table__cell--actor">
+                        <span class="needs-table__dot needs-table__dot--indigo"></span>
+                        Administrateur
+                    </div>
+                    <div class="needs-table__cell needs-table__cell--role">Supervision, conformit&eacute; et validation</div>
+                    <div class="needs-table__cell needs-table__cell--needs">
+                        <ul class="needs-table__list">
+                            <li>Approbation ou rejet des virements sensibles via Flowable BPMN</li>
+                            <li>Supervision globale des comptes et des utilisateurs</li>
+                            <li>Consultation des &eacute;v&eacute;nements d'audit et alertes de s&eacute;curit&eacute;</li>
+                            <li>Configuration des param&egrave;tres et des seuils bancaires</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="needs-table__row needs-table__row--purple" data-delay="2">
+                    <div class="needs-table__cell needs-table__cell--actor">
+                        <span class="needs-table__dot needs-table__dot--purple"></span>
+                        Syst&egrave;me &amp; Agent IA
+                    </div>
+                    <div class="needs-table__cell needs-table__cell--role">Orchestration et intelligence m&eacute;tier</div>
+                    <div class="needs-table__cell needs-table__cell--needs">
+                        <ul class="needs-table__list">
+                            <li>D&eacute;tection automatique du d&eacute;passement de seuil (&gt; 5 000 TND)</li>
+                            <li>D&eacute;clenchement et synchronisation du processus Flowable</li>
+                            <li>Recherche documentaire vectorielle et g&eacute;n&eacute;ration RAG</li>
+                            <li>Journalisation immuable de chaque op&eacute;ration sensible</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <span class="nav-year">12 / 34</span>
+        </div>
+
+    </div>
+
+    <script src="../slide-enter.js"></script>
+    <script src="script.js"></script>
+    <script src="../nav.js"></script>
+    <script src="../transition.js"></script>
+</body>
+</html>

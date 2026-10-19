@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide 05 : Cadre Général du Projet FinBank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../nav-hint.css">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+
+    <div class="slide">
+
+        <header class="slide__header">
+            <span class="slide__eyebrow">PRÉSENTATION DE LA SOLUTION</span>
+            <h1 class="slide__title">FinBank &mdash; Digital Banking Platform</h1>
+            <p class="slide__subtitle">Plateforme bancaire unifi&eacute;e, s&eacute;curis&eacute;e et pilot&eacute;e par les processus m&eacute;tiers et l'IA</p>
+        </header>
+
+        <!-- Pop-Out Stage for the single FinBank image -->
+        <div class="finbank-showcase" data-delay="1">
+            <div class="finbank-popout-card" id="finbankCard">
+                <div class="popout-aura"></div>
+                <div class="popout-reflection"></div>
+                
+                <!-- Floating badges -->
+                <div class="popout-badge popout-badge--top">
+                    <span class="badge-dot"></span>
+                    <span>FinBank Core System</span>
+                </div>
+
+                <div class="popout-img-wrapper">
+                    <img src="../assets/Finbank.png" alt="FinBank" class="popout-img" id="finbankImg">
+                </div>
+
+                <div class="popout-footer">
+                    <div class="popout-identity">
+                        <span class="popout-name">FinBank</span>
+                        <span class="popout-desc">Next-Gen Digital Banking Experience</span>
+                    </div>
+                    <div class="popout-chips">
+                        <span class="chip chip--blue">Spring Boot 3</span>
+                        <span class="chip chip--emerald">Flowable BPMN</span>
+                        <span class="chip chip--purple">IA &amp; RAG Souverain</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <span class="nav-year">05 / 34</span>
+        </div>
+
+    </div>
+
+    <script src="../slide-enter.js"></script>
+    <script src="script.js"></script>
+    <script src="../nav.js"></script>
+    <script src="../transition.js"></script>
+</body>
+</html>

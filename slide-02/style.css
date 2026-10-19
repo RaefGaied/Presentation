@@ -1,0 +1,363 @@
+/* ═══════════════════════════════════════════════════════════════
+   Slide 02 : Plan de la Présentation (FinBank Edition)
+   ═══════════════════════════════════════════════════════════════ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(160deg, #f0f4f8 0%, #f8fafc 50%, #eef2f7 100%);
+    color: #1e293b;
+    overflow: hidden;
+}
+
+/* ── Ambient Orbs ── */
+.ambient-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+}
+
+.orb-1 {
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, rgba(0, 102, 204, 0.16) 0%, transparent 70%);
+    top: -5%;
+    right: -5%;
+    animation: orbFloat1 28s ease-in-out infinite alternate, orbAppear 1.2s ease forwards;
+}
+
+.orb-2 {
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.14) 0%, transparent 70%);
+    bottom: -5%;
+    left: -5%;
+    animation: orbFloat2 32s ease-in-out infinite alternate, orbAppear 1.2s ease 0.3s forwards;
+}
+
+.orb-3 {
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(234, 88, 12, 0.12) 0%, transparent 70%);
+    top: 50%;
+    left: 45%;
+    animation: orbFloat3 36s ease-in-out infinite alternate, orbAppear 1.2s ease 0.6s forwards;
+}
+
+@keyframes orbAppear { to { opacity: 1; } }
+@keyframes orbFloat1 { 0%{transform:translate(0,0)} 100%{transform:translate(-30px,40px)} }
+@keyframes orbFloat2 { 0%{transform:translate(0,0)} 100%{transform:translate(30px,-30px)} }
+@keyframes orbFloat3 { 0%{transform:translate(0,0)} 100%{transform:translate(20px,20px)} }
+
+/* ── Background Canvas ── */
+#bg-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ── Layout ── */
+.plan {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2.2vh 3.5vw 8vh;
+    gap: 2.4vh;
+}
+
+/* ── Header ── */
+.plan__header {
+    text-align: center;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(-16px);
+}
+
+.plan__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #0066cc;
+    background: rgba(0, 102, 204, 0.08);
+    border: 1px solid rgba(0, 102, 204, 0.2);
+    padding: 0.32rem 0.95rem;
+    border-radius: 100px;
+    margin-bottom: 0.5rem;
+}
+
+.plan__title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2.3rem, 3.6vw, 3.5rem);
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+}
+
+.plan__title::after {
+    content: '';
+    display: block;
+    width: 76px;
+    height: 4px;
+    background: linear-gradient(90deg, #0066cc 0%, #10b981 50%, #ea580c 100%);
+    border-radius: 4px;
+    margin: 8px auto 0;
+    transform: scaleX(0);
+    animation: lineGrow 0.7s ease 0.8s forwards;
+}
+
+@keyframes lineGrow { to { transform: scaleX(1); } }
+
+.plan__subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.95rem, 1.2vw, 1.18rem);
+    color: #64748b;
+    margin-top: 0.3rem;
+    font-weight: 400;
+}
+
+/* ── Grid 3x3 ── */
+.plan__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1.25rem 1.4rem;
+    width: 100%;
+    max-width: 1320px;
+    position: relative;
+    z-index: 2;
+}
+
+/* ── Plan Card ── */
+.plan__card {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(0, 102, 204, 0.12);
+    border-radius: 18px;
+    padding: 1.1rem 1.35rem 1.15rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05), 0 2px 6px rgba(0, 102, 204, 0.03);
+    transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.32s ease, border-color 0.32s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 110px;
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+    cursor: default;
+}
+
+.plan__card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 18px 40px rgba(0, 102, 204, 0.12), 0 0 0 1px rgba(0, 102, 204, 0.25);
+    border-color: rgba(0, 102, 204, 0.35);
+}
+
+.plan__card--demo {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 243, 199, 0.35) 100%);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.plan__card--demo:hover {
+    border-color: #f59e0b;
+    box-shadow: 0 18px 40px rgba(245, 158, 11, 0.18);
+}
+
+/* ── Card Top Header ── */
+.plan__card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+}
+
+/* ── Clear, High-Contrast Number Badge ── */
+.plan__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.05rem;
+    font-weight: 800;
+    padding: 0.25rem 0.65rem;
+    border-radius: 8px;
+    letter-spacing: 0.05em;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.plan__num--blue   { background: linear-gradient(135deg, #0066cc, #0284c7); color: #ffffff; }
+.plan__num--indigo { background: linear-gradient(135deg, #4f46e5, #6366f1); color: #ffffff; }
+.plan__num--purple { background: linear-gradient(135deg, #7c3aed, #8b5cf6); color: #ffffff; }
+.plan__num--cyan   { background: linear-gradient(135deg, #0891b2, #06b6d4); color: #ffffff; }
+.plan__num--emerald{ background: linear-gradient(135deg, #059669, #10b981); color: #ffffff; }
+.plan__num--teal   { background: linear-gradient(135deg, #0d9488, #14b8a6); color: #ffffff; }
+.plan__num--orange { background: linear-gradient(135deg, #ea580c, #f97316); color: #ffffff; }
+.plan__num--rose   { background: linear-gradient(135deg, #e11d48, #f43f5e); color: #ffffff; }
+.plan__num--amber  { background: linear-gradient(135deg, #d97706, #f59e0b); color: #ffffff; }
+
+.plan__part-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+}
+
+.plan__part-tag--live {
+    color: #b45309;
+    background: rgba(245, 158, 11, 0.15);
+    font-weight: 800;
+    animation: livePulse 2s infinite;
+}
+
+@keyframes livePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ── Card Titles ── */
+.plan__card-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.22;
+    margin: 0.25rem 0 0.15rem;
+    letter-spacing: -0.015em;
+    transition: color 0.2s ease;
+}
+
+.plan__card:hover .plan__card-title {
+    color: #0066cc;
+}
+
+.plan__card--demo:hover .plan__card-title {
+    color: #d97706;
+}
+
+/* ── Card Scope/Subtitle ── */
+.plan__card-scope {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.76rem;
+    font-weight: 500;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── Bottom Accent Bar ── */
+.plan__card-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    opacity: 0.7;
+    transition: height 0.25s ease, opacity 0.25s ease;
+}
+
+.plan__card:hover .plan__card-bar {
+    height: 4px;
+    opacity: 1;
+}
+
+.plan__card-bar--blue   { background: linear-gradient(90deg, #0066cc, #0284c7); }
+.plan__card-bar--indigo { background: linear-gradient(90deg, #4f46e5, #6366f1); }
+.plan__card-bar--purple { background: linear-gradient(90deg, #7c3aed, #8b5cf6); }
+.plan__card-bar--cyan   { background: linear-gradient(90deg, #0891b2, #06b6d4); }
+.plan__card-bar--emerald{ background: linear-gradient(90deg, #059669, #10b981); }
+.plan__card-bar--teal   { background: linear-gradient(90deg, #0d9488, #14b8a6); }
+.plan__card-bar--orange { background: linear-gradient(90deg, #ea580c, #f97316); }
+.plan__card-bar--rose   { background: linear-gradient(90deg, #e11d48, #f43f5e); }
+.plan__card-bar--amber  { background: linear-gradient(90deg, #d97706, #f59e0b); }
+
+/* ── Navigation ── */
+.navigation {
+    position: fixed;
+    bottom: 1.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    opacity: 0;
+}
+
+.nav-year {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #64748b;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 0.55rem 1.35rem;
+    border-radius: 14px;
+    border: 1px solid rgba(0, 102, 204, 0.14);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* ── Responsive ── */
+@media (max-height: 850px) {
+    .plan {
+        padding: 1.8vh 3vw 6.5vh;
+        gap: 1.6vh;
+    }
+    .plan__grid {
+        gap: 1rem 1.2rem;
+    }
+    .plan__card {
+        padding: 0.9rem 1.15rem;
+        min-height: 96px;
+    }
+    .plan__card-title {
+        font-size: 1.05rem;
+    }
+    .plan__card-scope {
+        font-size: 0.72rem;
+    }
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+    .ambient-orb,
+    .plan__header,
+    .plan__card,
+    .navigation {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+}

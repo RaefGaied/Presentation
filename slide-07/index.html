@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide 05 : Étude de l'existant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../nav-hint.css">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+
+    <div class="slide">
+
+        <header class="slide__header">
+            <h1 class="slide__title">Étude de l'existant</h1>
+            <p class="slide__subtitle">Analyse des plateformes concurrentes du marché</p>
+        </header>
+
+        <!-- Row 1: 3 main platforms -->
+        <div class="row row--top">
+
+            <div class="plat" data-delay="0">
+                <div class="plat__card">
+                    <div class="plat__img-wrap">
+                        <img src="../assets/bankin.png" alt="Bankin' &amp; Linxo" class="plat__img" style="object-position: 50% 15%;">
+                    </div>
+                    <div class="plat__body">
+                        <div class="plat__meta">
+                            <span class="plat__dot plat__dot--blue"></span>
+                            <span class="plat__cat">Agr&eacute;gation &amp; Budget</span>
+                        </div>
+                        <h3 class="plat__name">Bankin' &middot; Linxo</h3>
+                        <p class="plat__desc">Plateforme d'agr&eacute;gation bancaire et de gestion budg&eacute;taire multi-comptes. Analyse des d&eacute;penses mais d&eacute;pourvue de moteur de validation BPMN sur-mesure.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plat" data-delay="1">
+                <div class="plat__card">
+                    <div class="plat__img-wrap">
+                        <img src="../assets/Revolut.png" alt="Revolut" class="plat__img" style="object-position: top center;">
+                    </div>
+                    <div class="plat__body">
+                        <div class="plat__meta">
+                            <span class="plat__dot plat__dot--purple"></span>
+                            <span class="plat__cat">N&eacute;obanque</span>
+                        </div>
+                        <h3 class="plat__name">Revolut</h3>
+                        <p class="plat__desc">R&eacute;f&eacute;rence n&eacute;obanque internationale : multi-devises, virements instantan&eacute;s et cartes virtuelles &eacute;ph&eacute;m&egrave;res, mais mod&egrave;le cloud ferm&eacute; sans agent IA documentaire.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plat" data-delay="2">
+                <div class="plat__card">
+                    <div class="plat__img-wrap">
+                        <img src="../assets/erica.png" alt="Erica (Bank of America)" class="plat__img" style="object-position: top center;">
+                    </div>
+                    <div class="plat__body">
+                        <div class="plat__meta">
+                            <span class="plat__dot plat__dot--green"></span>
+                            <span class="plat__cat">Assistant Virtuel</span>
+                        </div>
+                        <h3 class="plat__name">Erica (Bank of America)</h3>
+                        <p class="plat__desc">Assistant conversationnel pionnier int&eacute;gr&eacute; &agrave; l'application mobile. R&eacute;ponses aux requ&ecirc;tes usuelles sans ancrage documentaire RAG d&eacute;di&eacute; aux r&eacute;glementations internes.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Row 2: 2 platforms + Problem Statement -->
+        <div class="row row--bottom">
+
+            <div class="plat plat--small" data-delay="3">
+                <div class="plat__card">
+                    <div class="plat__img-wrap">
+                        <img src="../assets/boursobank.png" alt="N26 &middot; BoursoBank" class="plat__img" style="object-position: top center;">
+                    </div>
+                    <div class="plat__body">
+                        <div class="plat__meta">
+                            <span class="plat__dot plat__dot--blue"></span>
+                            <span class="plat__cat">Banque en ligne</span>
+                        </div>
+                        <h3 class="plat__name">N26 &middot; BoursoBank</h3>
+                        <p class="plat__desc">Exp&eacute;rience utilisateur moderne et gestion des cartes en direct, mais flux d'approbation des seuils rigides et non param&eacute;trables.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Problem Statement -->
+            <div class="gap-card" data-delay="4">
+                <div class="gap-card__inner">
+                    <h3 class="gap-card__title">Probl&eacute;matique</h3>
+                    <p class="gap-card__lead">Aucune solution existante ne combine de mani&egrave;re coh&eacute;rente ces cinq piliers dans un &eacute;cosyst&egrave;me unifi&eacute; et souverain.</p>
+                    <div class="gap-card__features">
+                        <span class="gap-tag gap-tag--blue">Gestion Multi-comptes</span>
+                        <span class="gap-tag gap-tag--teal">Virements sensibles BPMN</span>
+                        <span class="gap-tag gap-tag--green">Cartes &amp; D&eacute;voilement</span>
+                        <span class="gap-tag gap-tag--purple">Assistant IA RAG</span>
+                        <span class="gap-tag gap-tag--indigo">Audit &amp; Tra&ccedil;abilit&eacute;</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plat plat--small" data-delay="5">
+                <div class="plat__card">
+                    <div class="plat__img-wrap">
+                        <img src="../assets/snf.png" alt="Banques Traditionnelles" class="plat__img" style="object-position: top center;">
+                    </div>
+                    <div class="plat__body">
+                        <div class="plat__meta">
+                            <span class="plat__dot plat__dot--purple"></span>
+                            <span class="plat__cat">Syst&egrave;mes Legacy</span>
+                        </div>
+                        <h3 class="plat__name">Banques Traditionnelles</h3>
+                        <p class="plat__desc">Applications lourdes, interfaces vieillissantes, d&eacute;lais de traitement manuels et absence de r&eacute;ponses intelligentes en temps r&eacute;el.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="navigation">
+            <span class="nav-year">07 / 34</span>
+        </div>
+
+    </div>
+
+    <script src="../slide-enter.js"></script>
+    <script src="script.js"></script>
+    <script src="../nav.js"></script>
+    <script src="../transition.js"></script>
+</body>
+</html>

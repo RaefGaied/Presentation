@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide 22 : Pipeline CI/CD FinBank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../nav-hint.css">
+</head>
+<body>
+    <div class="slide">
+
+        <!-- Header -->
+        <header class="slide__header">
+            <span class="slide__eyebrow">DevOps &amp; Intégration Continue</span>
+            <h1 class="slide__title">Pipeline CI / CD FinBank</h1>
+            <p class="slide__subtitle">GitHub Actions &rarr; Tests automatisés &rarr; SonarCloud &rarr; GHCR &rarr; Docker Compose</p>
+        </header>
+
+        <!-- Pipeline diagram -->
+        <div class="pipeline" id="pipeline">
+
+            <!-- ══ CI ROW ══ -->
+            <div class="lane-label lane-label--ci">
+                <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>
+                Intégration Continue (CI) &mdash; automatique sur chaque push / PR
+            </div>
+
+            <div class="pipe-row" id="row-ci">
+
+                <!-- 1. Git Push -->
+                <div class="pipe-node pipe-node--ci">
+                    <div class="pipe-node__badge pipe-node__badge--slate">
+                        <img src="../assets/github.png" alt="GitHub">
+                    </div>
+                    <div class="pipe-node__label">Git Push</div>
+                    <div class="pipe-node__sub">main / PR</div>
+                </div>
+
+                <div class="pipe-arrow pipe-arrow--blue">
+                    <svg viewBox="0 0 52 20" fill="none"><defs><filter id="glow-b"><feGaussianBlur stdDeviation="1.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M2 10 H40" stroke="currentColor" stroke-width="2" stroke-linecap="round" filter="url(#glow-b)"/><path d="M36 5 L50 10 L36 15" fill="currentColor" filter="url(#glow-b)"/></svg>
+                    <span class="dot"></span>
+                </div>
+
+                <!-- 2. GitHub Actions trigger -->
+                <div class="pipe-node pipe-node--ci">
+                    <div class="pipe-node__badge pipe-node__badge--orange">
+                        <img src="../assets/github_actions.png" alt="GitHub Actions">
+                    </div>
+                    <div class="pipe-node__label">GitHub Actions</div>
+                    <div class="pipe-node__sub">ci.yml déclenché</div>
+                </div>
+
+                <div class="pipe-arrow pipe-arrow--blue">
+                    <svg viewBox="0 0 52 20" fill="none"><path d="M2 10 H40" stroke="currentColor" stroke-width="2" stroke-linecap="round" filter="url(#glow-b)"/><path d="M36 5 L50 10 L36 15" fill="currentColor" filter="url(#glow-b)"/></svg>
+                    <span class="dot"></span>
+                </div>
+
+                <!-- 3. Build + Tests backend -->
+                <div class="pipe-node pipe-node--ci pipe-node--highlight">
+                    <div class="pipe-node__badge pipe-node__badge--blue">
+                        <img src="../assets/spring_boot.png" alt="Spring Boot">
+                    </div>
+                    <div class="pipe-node__label">Build &amp; Tests</div>
+                    <div class="pipe-node__sub">Maven · JUnit · Surefire</div>
+                    <div class="pipe-node__chip pipe-node__chip--green">✓ PostgreSQL · Redis · Kafka</div>
+                </div>
+
+                <div class="pipe-arrow pipe-arrow--blue">
+                    <svg viewBox="0 0 52 20" fill="none"><path d="M2 10 H40" stroke="currentColor" stroke-width="2" stroke-linecap="round" filter="url(#glow-b)"/><path d="M36 5 L50 10 L36 15" fill="currentColor" filter="url(#glow-b)"/></svg>
+                    <span class="dot"></span>
+                </div>
+
+                <!-- 4. Frontend Build + E2E -->
+                <div class="pipe-node pipe-node--ci pipe-node--highlight">
+                    <div class="pipe-node__badge pipe-node__badge--cyan">
+                        <img src="../assets/react.png" alt="React">
+                    </div>
+                    <div class="pipe-node__label">Frontend Build</div>
+                    <div class="pipe-node__sub">npm lint · Vite build</div>
+                    <div class="pipe-node__chip pipe-node__chip--purple">✓ Playwright E2E</div>
+                </div>
+
+                <div class="pipe-arrow pipe-arrow--blue">
+                    <svg viewBox="0 0 52 20" fill="none"><path d="M2 10 H40" stroke="currentColor" stroke-width="2" stroke-linecap="round" filter="url(#glow-b)"/><path d="M36 5 L50 10 L36 15" fill="currentColor" filter="url(#glow-b)"/></svg>
+                    <span class="dot"></span>
+                </div>
+
+                <!-- 5. SonarCloud -->
+                <div class="pipe-node pipe-node--ci">
+                    <div class="pipe-node__badge pipe-node__badge--sonar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12s4.48 10 10 10 10-4.48 10-10z"/><path d="M8 12c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg>
+                    </div>
+                    <div class="pipe-node__label">SonarCloud</div>
+                    <div class="pipe-node__sub">Qualité · Bugs · Coverage</div>
+                </div>
+
+            </div><!-- /row-ci -->
+
+            <!-- ══ CENTER CONNECTOR ══ -->
+            <div class="connector-vps">
+                <div class="connector-vps__v"></div>
+                <div class="connector-vps__top">
+                    <div class="connector-vps__h connector-vps__h--right"></div>
+                </div>
+
+                <!-- Docker build + GHCR push (center) -->
+                <div class="pipe-row pipe-row--center connector-vps__middle" id="row-publish">
+                    <div class="pipe-node pipe-node--vps">
+                        <div class="pipe-node__badge pipe-node__badge--blue">
+                            <img src="../assets/docker-logo.png" alt="Docker Build">
+                        </div>
+                        <div class="pipe-node__label">Docker Build &amp; Push</div>
+                        <div class="pipe-node__sub">5 images &rarr; ghcr.io/raefgaied &middot; tag SHA + latest</div>
+                    </div>
+                </div>
+
+                <div class="connector-vps__bottom">
+                    <div class="connector-vps__h connector-vps__h--left"></div>
+                </div>
+            </div>
+
+            <!-- ══ CD ROW ══ -->
+            <div class="lane-label lane-label--cd">
+                <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>
+                Déploiement Continu (CD) &mdash; push sur <code>main</code> uniquement
+            </div>
+
+            <div class="pipe-row" id="row-cd">
+
+                <!-- 1. GHCR Pull -->
+                <div class="pipe-node pipe-node--cd">
+                    <div class="pipe-node__badge pipe-node__badge--slate">
+                        <img src="../assets/github.png" alt="GHCR">
+                    </div>
+                    <div class="pipe-node__label">GHCR Pull</div>
+                    <div class="pipe-node__sub">ghcr.io/raefgaied</div>
+                </div>
+
+                <div class="pipe-arrow pipe-arrow--green">
+                    <svg viewBox="0 0 52 20" fill="none"><defs><filter id="glow-g"><feGaussianBlur stdDeviation="1.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M2 10 H40" stroke="currentColor" stroke-width="2" stroke-linecap="round" filter="url(#glow-g)"/><path d="M36 5 L50 10 L36 15" fill="currentColor" filter="url(#glow-g)"/></svg>
+                    <span class="dot"></span>
+                </div>
+
+                <!-- 2. SSH + Docker Compose Up -->
+                <div class="pipe-node pipe-node--cd pipe-node--highlight">
+                    <div class="pipe-node__badge pipe-node__badge--blue">
+                        <img src="../assets/docker-logo.png" alt="Docker Compose">
+                    </div>
+                    <div class="pipe-node__label">Compose Up</div>
+                    <div class="pipe-node__sub">SSH · docker compose up -d</div>
+                    <div class="pipe-node__chip pipe-node__chip--blue">Backend · AI-Agent · Frontend · DB</div>
+                </div>
+
+                <div class="pipe-arrow pipe-arrow--green">
+                    <svg viewBox="0 0 52 20" fill="none"><path d="M2 10 H40" stroke="currentColor" stroke-width="2" stroke-linecap="round" filter="url(#glow-g)"/><path d="M36 5 L50 10 L36 15" fill="currentColor" filter="url(#glow-g)"/></svg>
+                    <span class="dot"></span>
+                </div>
+
+                <!-- 3. Health check -->
+                <div class="pipe-node pipe-node--cd">
+                    <div class="pipe-node__badge pipe-node__badge--amber">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <div class="pipe-node__label">Health Checks</div>
+                    <div class="pipe-node__sub">Actuator · pg_isready · redis ping</div>
+                </div>
+
+                <div class="pipe-arrow pipe-arrow--green">
+                    <svg viewBox="0 0 52 20" fill="none"><path d="M2 10 H40" stroke="currentColor" stroke-width="2" stroke-linecap="round" filter="url(#glow-g)"/><path d="M36 5 L50 10 L36 15" fill="currentColor" filter="url(#glow-g)"/></svg>
+                    <span class="dot"></span>
+                </div>
+
+                <!-- 4. Production -->
+                <div class="pipe-node pipe-node--prod">
+                    <div class="pipe-node__badge pipe-node__badge--prod">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <div class="pipe-node__label">Production</div>
+                    <div class="pipe-node__sub">FinBank Live</div>
+                </div>
+
+            </div><!-- /row-cd -->
+
+        </div><!-- /pipeline -->
+
+        <div class="navigation">
+            <span class="nav-year">22 / 34</span>
+        </div>
+    </div>
+
+    <!-- ══ 4 Corner Thumbnails (fixed) ══ -->
+
+    <!-- Top-Left: GitHub Actions runs -->
+    <button class="corner-thumb corner-thumb--tl" id="thumb-0"
+            data-img="../assets/ci_github_actions_runs.png"
+            data-title="GitHub Actions — CI Run"
+            data-sub="Pipeline réussi · Status : <strong>Success</strong> · 9m 37s · 6 artefacts">
+        <img src="../assets/ci_github_actions_runs.png" alt="GitHub Actions runs">
+        <span class="corner-thumb__label">
+            <span class="corner-thumb__dot corner-thumb__dot--green"></span>
+            Pipeline CI
+        </span>
+    </button>
+
+    <!-- Top-Right: Job detail -->
+    <button class="corner-thumb corner-thumb--tr" id="thumb-1"
+            data-img="../assets/ci_job_detail.png"
+            data-title="Détail des jobs"
+            data-sub="Build &amp; Test ✅ · Frontend Build ✅ · Playwright E2E ✅ · 5 images Docker publiées ✅">
+        <img src="../assets/ci_job_detail.png" alt="Job detail">
+        <span class="corner-thumb__label">
+            <span class="corner-thumb__dot corner-thumb__dot--green"></span>
+            Jobs &amp; étapes
+        </span>
+    </button>
+
+    <!-- Bottom-Left: SonarCloud -->
+    <button class="corner-thumb corner-thumb--bl" id="thumb-2"
+            data-img="../assets/sonarcloud_dashboard.png"
+            data-title="SonarCloud — Qualité du code"
+            data-sub="banking-api · 7.1k lignes de code · Java/XML · Analyse automatique sur chaque push">
+        <img src="../assets/sonarcloud_dashboard.png" alt="SonarCloud">
+        <span class="corner-thumb__label">
+            <span class="corner-thumb__dot corner-thumb__dot--amber"></span>
+            SonarCloud
+        </span>
+    </button>
+
+    <!-- Bottom-Right: GHCR -->
+    <button class="corner-thumb corner-thumb--br" id="thumb-3"
+            data-img="../assets/ghcr_images.png"
+            data-title="GHCR — 5 images Docker publiées"
+            data-sub="frontend · postgres · pgadmin · ai-agent · banking-api → ghcr.io/raefgaied">
+        <img src="../assets/ghcr_images.png" alt="GHCR packages">
+        <span class="corner-thumb__label">
+            <span class="corner-thumb__dot corner-thumb__dot--blue"></span>
+            Images Docker
+        </span>
+    </button>
+
+    <!-- Dynamic overlay (shared for all 4 proof cards) -->
+    <div class="ci-overlay" id="ci-overlay">
+        <div class="ci-overlay__backdrop"></div>
+        <div class="ci-overlay__card">
+            <div class="ci-overlay__header">
+                <div class="ci-overlay__title" id="overlay-title">
+                    <img src="../assets/github_actions.png" alt="" width="22" id="overlay-icon">
+                    <span id="overlay-title-text">Pipeline CI/CD</span>
+                </div>
+                <button class="ci-overlay__close" id="ci-close">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <img src="" alt="Preuve CI/CD" class="ci-overlay__img" id="overlay-img">
+            <p class="ci-overlay__hint" id="overlay-sub">Appuyer sur <kbd>Échap</kbd> ou cliquer en dehors pour fermer</p>
+        </div>
+    </div>
+
+    <script src="../slide-enter.js"></script>
+    <script src="script.js"></script>
+    <script src="../nav.js"></script>
+    <script src="../transition.js"></script>
+</body>
+</html>

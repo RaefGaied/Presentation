@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide 16 : Planning Agile FinBank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../nav-hint.css">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+
+    <div class="slide">
+        <header class="slide__header">
+            <span class="slide__eyebrow">PLANNING AGILE</span>
+            <h1 class="slide__title">Plan de découpage par sprints</h1>
+            <p class="slide__subtitle">Releases et modules métiers du projet FinBank</p>
+        </header>
+
+        <!-- 5-Column Agile Sprint Roadmap -->
+        <div class="roadmap" data-delay="1">
+
+            <!-- Release 1 Group (2 Sprints) -->
+            <div class="release-group release-group--1">
+                <div class="release-banner release-banner--1">
+                    <div class="release-tag">RELEASE 1</div>
+                    <span class="release-name">Fondations &amp; Services Bancaires</span>
+                </div>
+                <div class="release-sprints">
+
+                    <!-- Sprint 1 -->
+                    <div class="sprint-card sprint-card--1" data-delay="0">
+                        <div class="sprint-card__top">
+                            <span class="sprint-badge sprint-badge--1">01</span>
+                            <div class="sprint-meta">
+                                <span class="sprint-chip">Sprint 1</span>
+                                <h3 class="sprint-title">Socle sécurisé</h3>
+                            </div>
+                        </div>
+                        <ul class="sprint-features">
+                            <li><span class="feat-dot feat-dot--blue"></span>Backend Spring Boot</li>
+                            <li><span class="feat-dot feat-dot--blue"></span>Authentification JWT</li>
+                            <li><span class="feat-dot feat-dot--blue"></span>Rôles USER / ADMIN</li>
+                            <li><span class="feat-dot feat-dot--blue"></span>Profil et mot de passe</li>
+                            <li><span class="feat-dot feat-dot--blue"></span>Double authentification</li>
+                        </ul>
+                    </div>
+
+                    <!-- Sprint 2 -->
+                    <div class="sprint-card sprint-card--2" data-delay="1">
+                        <div class="sprint-card__top">
+                            <span class="sprint-badge sprint-badge--2">02</span>
+                            <div class="sprint-meta">
+                                <span class="sprint-chip">Sprint 2</span>
+                                <h3 class="sprint-title">Services bancaires</h3>
+                            </div>
+                        </div>
+                        <ul class="sprint-features">
+                            <li><span class="feat-dot feat-dot--cyan"></span>Comptes et soldes</li>
+                            <li><span class="feat-dot feat-dot--cyan"></span>Dépôts et retraits</li>
+                            <li><span class="feat-dot feat-dot--cyan"></span>Virements</li>
+                            <li><span class="feat-dot feat-dot--cyan"></span>Historique et reçus PDF</li>
+                            <li><span class="feat-dot feat-dot--cyan"></span>Cartes bancaires</li>
+                            <li><span class="feat-dot feat-dot--cyan"></span>Investissements</li>
+                            <li><span class="feat-dot feat-dot--cyan"></span>Clés de paiement</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Release 2 Group (3 Sprints) -->
+            <div class="release-group release-group--2">
+                <div class="release-banner release-banner--2">
+                    <div class="release-tag">RELEASE 2</div>
+                    <span class="release-name">IA, Workflows &amp; DevOps</span>
+                </div>
+                <div class="release-sprints">
+
+                    <!-- Sprint 3 -->
+                    <div class="sprint-card sprint-card--3" data-delay="2">
+                        <div class="sprint-card__top">
+                            <span class="sprint-badge sprint-badge--3">03</span>
+                            <div class="sprint-meta">
+                                <span class="sprint-chip">Sprint 3</span>
+                                <h3 class="sprint-title">Agent IA &amp; RAG</h3>
+                            </div>
+                        </div>
+                        <ul class="sprint-features">
+                            <li><span class="feat-dot feat-dot--purple"></span>Assistant conversationnel</li>
+                            <li><span class="feat-dot feat-dot--purple"></span>Modèle local Ollama</li>
+                            <li><span class="feat-dot feat-dot--purple"></span>Recherche RAG</li>
+                            <li><span class="feat-dot feat-dot--purple"></span>Sessions de chat</li>
+                            <li><span class="feat-dot feat-dot--purple"></span>Base de connaissances</li>
+                        </ul>
+                    </div>
+
+                    <!-- Sprint 4 -->
+                    <div class="sprint-card sprint-card--4" data-delay="3">
+                        <div class="sprint-card__top">
+                            <span class="sprint-badge sprint-badge--4">04</span>
+                            <div class="sprint-meta">
+                                <span class="sprint-chip">Sprint 4</span>
+                                <h3 class="sprint-title">Workflows BPMN</h3>
+                            </div>
+                        </div>
+                        <ul class="sprint-features">
+                            <li><span class="feat-dot feat-dot--orange"></span>Moteur Flowable</li>
+                            <li><span class="feat-dot feat-dot--orange"></span>Virements importants</li>
+                            <li><span class="feat-dot feat-dot--orange"></span>Alertes de fraude</li>
+                            <li><span class="feat-dot feat-dot--orange"></span>Gestion données sensibles</li>
+                            <li><span class="feat-dot feat-dot--orange"></span>Espace administrateur</li>
+                            <li><span class="feat-dot feat-dot--orange"></span>Notifications et audit</li>
+                        </ul>
+                    </div>
+
+                    <!-- Sprint 5 -->
+                    <div class="sprint-card sprint-card--5" data-delay="4">
+                        <div class="sprint-card__top">
+                            <span class="sprint-badge sprint-badge--5">05</span>
+                            <div class="sprint-meta">
+                                <span class="sprint-chip">Sprint 5</span>
+                                <h3 class="sprint-title">Tests &amp; livraison</h3>
+                            </div>
+                        </div>
+                        <ul class="sprint-features">
+                            <li><span class="feat-dot feat-dot--emerald"></span>Tests &amp; correction anomalies</li>
+                            <li><span class="feat-dot feat-dot--emerald"></span>Intégration continue</li>
+                            <li><span class="feat-dot feat-dot--emerald"></span>SonarCloud</li>
+                            <li><span class="feat-dot feat-dot--emerald"></span>Docker Compose</li>
+                            <li><span class="feat-dot feat-dot--emerald"></span>Déploiement</li>
+                            <li><span class="feat-dot feat-dot--emerald"></span>Documentation</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Required Summary Mention Footer -->
+        <div class="roadmap-summary" data-delay="5">
+            <span class="summary-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </span>
+            <span>5 sprints &mdash; 2 releases &mdash; Backend monolithique modulaire Spring Boot &mdash; Frontend React/TypeScript.</span>
+        </div>
+
+        <div class="navigation">
+            <span class="nav-year">16 / 34</span>
+        </div>
+    </div>
+
+    <script src="../slide-enter.js"></script>
+    <script src="script.js"></script>
+    <script src="../nav.js"></script>
+    <script src="../transition.js"></script>
+</body>
+</html>

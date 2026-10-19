@@ -1,0 +1,14 @@
+{
+  "name": "finbank-presentation-34slides",
+  "version": "1.0.0",
+  "description": "Presentation FinBank - 34 slides",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve . -p 8080",
+    "dev": "npx serve . -p 8080",
+    "serve:python": "python -m http.server 8080"
+  },
+  "keywords": ["presentation", "finbank", "vermeg", "polytechnique"],
+  "author": "Raef GAIED",
+  "license": "ISC"
+}
