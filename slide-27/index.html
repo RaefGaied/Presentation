@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slide 18 : Interface Restaurant</title>
+    <title>Slide 27 : Workflows BPMN et support client</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../nav-hint.css">
+    <link rel="stylesheet" href="../calm-override.css">
 </head>
 <body>
     <canvas id="bg-canvas"></canvas>
@@ -18,34 +19,54 @@
 
     <div class="slide">
         <header class="slide__header">
-            <h1 class="slide__title">Interface Workflows BPMN Admin</h1>
-            <p class="slide__subtitle">Console d'approbation Flowable &amp; supervision en direct des virements sensibles</p>
+            <h1 class="slide__title">Workflows BPMN &amp; support client</h1>
+            <p class="slide__subtitle">Du ticket client aux processus de fraude et de modification des donn&eacute;es</p>
         </header>
 
-        <div class="interface-stage">
+        <div class="interface-stage interface-stage--support">
             <div class="device device--web" data-delay="1">
                 <div class="device__frame">
                     <div class="browser-chrome">
                         <div class="browser-dots">
                             <span></span><span></span><span></span>
                         </div>
-                        <div class="browser-url">finbank.local/admin/workflows</div>
+                        <div class="browser-url">finbank.local/help-support</div>
                     </div>
                     <div class="device__screen">
-                        <img src="../assets/ui_workflow_admin_approuve.png" alt="Console Admin Approbation Flowable">
+                        <img src="../../images/ticket_fraude_created.png" alt="Page Aide et support avec formulaire et tickets r&eacute;cents">
                     </div>
                 </div>
-                <span class="device__label">Console d'Approbation Administrateur</span>
+                <span class="device__label">Aide et support — cr&eacute;ation et suivi d'un ticket</span>
             </div>
 
-            <div class="device device--mobile" data-delay="2">
+            <div class="device device--web" data-delay="2">
                 <div class="device__frame">
-                    <div class="device__notch"></div>
+                    <div class="browser-chrome browser-chrome--application">
+                        <div class="browser-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="browser-url">Camunda Modeler · Gestion de fraude</div>
+                    </div>
                     <div class="device__screen">
-                        <img src="../assets/workflow-virement.png" alt="Diagramme BPMN Flowable">
+                        <img src="../../images/camunda_bpmn_fraude.png" alt="Diagramme BPMN de gestion de fraude">
                     </div>
                 </div>
-                <span class="device__label">Mod&egrave;le de Processus Flowable BPMN</span>
+                <span class="device__label">BPMN — traitement d'un signalement de fraude</span>
+            </div>
+
+            <div class="device device--web" data-delay="3">
+                <div class="device__frame">
+                    <div class="browser-chrome browser-chrome--application">
+                        <div class="browser-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="browser-url">Camunda Modeler · Modification des donn&eacute;es</div>
+                    </div>
+                    <div class="device__screen">
+                        <img src="../../images/camunda_bpmn_modif_Data.png" alt="Diagramme BPMN de validation d'une modification sensible des donn&eacute;es">
+                    </div>
+                </div>
+                <span class="device__label">BPMN — validation d'une modification sensible</span>
             </div>
         </div>
 
@@ -58,8 +79,9 @@
     <div class="gallery" id="gallery">
         <div class="gallery__backdrop"></div>
         <div class="gallery__stage">
-            <img class="gallery__img" src="../assets/ui_workflow_admin_approuve.png" alt="Console Admin Approbation Flowable">
-            <img class="gallery__img" src="../assets/workflow-virement.png" alt="Diagramme BPMN Flowable FinBank">
+            <img class="gallery__img" src="../../images/ticket_fraude_created.png" alt="Page Aide et support avec formulaire et tickets r&eacute;cents">
+            <img class="gallery__img" src="../../images/camunda_bpmn_fraude.png" alt="Diagramme BPMN de gestion de fraude">
+            <img class="gallery__img" src="../../images/camunda_bpmn_modif_Data.png" alt="Diagramme BPMN de validation d'une modification sensible des donn&eacute;es">
         </div>
 
         <div class="gallery__controls">
@@ -67,7 +89,7 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
             </button>
             <div class="gallery__meta">
-                <span class="gallery__counter" id="gallery-counter">1 / 2</span>
+                <span class="gallery__counter" id="gallery-counter">1 / 3</span>
                 <div class="gallery__progress"><div class="gallery__progress-fill" id="gallery-progress"></div></div>
             </div>
             <button class="gallery__arrow gallery__arrow--right" id="gallery-next" aria-label="Image suivante">

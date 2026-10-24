@@ -147,9 +147,9 @@ html, body {
 
 .needs-table__row {
     display: grid;
-    grid-template-columns: 200px 230px 1fr;
+    grid-template-columns: 100px 250px 1fr;
     gap: 1rem;
-    padding: 0.85rem 1rem;
+    padding: 0.7rem 1rem;
     border-radius: 14px;
     align-items: center;
     background: #f8fafc;
@@ -202,19 +202,26 @@ html, body {
     align-items: center;
     gap: 0.6rem;
     font-family: 'Outfit', sans-serif;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 700;
-    color: #0f172a;
+    color: #0077cc;
 }
 
 .needs-table__cell--role {
-    font-size: 0.85rem;
-    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0f172a;
 }
 
 .needs-table__cell--needs {
     display: flex;
     align-items: center;
+}
+
+.needs-table__cell--needs p {
+    font-size: 0.86rem;
+    color: #475569;
+    line-height: 1.45;
 }
 
 .needs-table__dot {
@@ -292,12 +299,11 @@ html, body {
 }
 
 @media (max-width: 1200px) {
-    .needs-table__row { grid-template-columns: 160px 180px 1fr; }
+    .needs-table__row { grid-template-columns: 75px 190px 1fr; }
     .needs-table__list li { font-size: 0.75rem; }
 }
 @media (max-width: 900px) {
     .needs-table__row { grid-template-columns: 1fr; gap: 0.4rem; }
-    .needs-table__cell--role { display: none; }
     .needs-table__row--head { display: none; }
 }
 @media (max-width: 760px) {

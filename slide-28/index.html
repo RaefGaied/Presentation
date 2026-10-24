@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../nav-hint.css">
+    <link rel="stylesheet" href="../calm-override.css">
 </head>
 <body>
     <canvas id="bg-canvas"></canvas>
@@ -18,8 +19,8 @@
 
     <div class="slide">
         <header class="slide__header">
-            <h1 class="slide__title">Interface Assistant IA &amp; RAG</h1>
-            <p class="slide__subtitle">Assistant conversationnel intelligent guidant le client avec citations des r&egrave;gles bancaires</p>
+            <h1 class="slide__title">RAG : test et base documentaire</h1>
+            <p class="slide__subtitle">V&eacute;rification de la recherche documentaire et gestion des sources de connaissance</p>
         </header>
 
         <div class="interface-stage">
@@ -29,23 +30,28 @@
                         <div class="browser-dots">
                             <span></span><span></span><span></span>
                         </div>
-                        <div class="browser-url">finbank.local/ai-assistant</div>
+                        <div class="browser-url">finbank.local/admin/rag-test</div>
                     </div>
                     <div class="device__screen">
-                        <img src="../assets/ui_rag_page.png" alt="Interface Assistant IA RAG FinBank">
+                        <img src="../assets/rag_test_ask_know.png" alt="Test RAG montrant une question et les documents retrouvés">
                     </div>
                 </div>
-                <span class="device__label">Interface Web RAG</span>
+                <span class="device__label">Test de recherche — question et résultats retrouvés</span>
             </div>
 
-            <div class="device device--mobile" data-delay="2">
+            <div class="device device--web device--web-secondary" data-delay="2">
                 <div class="device__frame">
-                    <div class="device__notch"></div>
+                    <div class="browser-chrome">
+                        <div class="browser-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="browser-url">finbank.local/admin/rag-knowledge</div>
+                    </div>
                     <div class="device__screen">
-                        <img src="../assets/rag-interface.png" alt="Interface RAG Mobile FinBank">
+                        <img src="../assets/interface_web_rag.png" alt="Interface administrateur de gestion des documents de la base RAG">
                     </div>
                 </div>
-                <span class="device__label">Vue Interactive Assistant</span>
+                <span class="device__label">Administration — gestion de la base documentaire</span>
             </div>
         </div>
 
@@ -58,8 +64,8 @@
     <div class="gallery" id="gallery">
         <div class="gallery__backdrop"></div>
         <div class="gallery__stage">
-            <img class="gallery__img" src="../assets/ui_rag_page.png" alt="Interface Assistant IA RAG FinBank">
-            <img class="gallery__img" src="../assets/rag-interface.png" alt="Interface RAG Mobile FinBank">
+            <img class="gallery__img" src="../assets/rag_test_ask_know.png" alt="Test RAG montrant une question et les documents retrouvés">
+            <img class="gallery__img" src="../assets/interface_web_rag.png" alt="Interface administrateur de gestion des documents de la base RAG">
         </div>
 
         <div class="gallery__controls">

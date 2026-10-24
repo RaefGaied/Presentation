@@ -1,0 +1,299 @@
+FINBANK — FICHE DE PREPARATION TECHNIQUE
+Flowable/BPMN et service Python de l'agent
+
+Cette fiche sert à comprendre le code et à préparer les questions du jury.
+Elle ne remplace pas le discours principal. Les descriptions portent sur les
+fichiers présents dans le dépôt ; elles ne signifient pas que chaque scénario
+a été exécuté ou validé en conditions de production.
+
+
+1. COMMENT BPMN ET FLOWABLE S'ARTICULENT
+
+BPMN est une notation graphique pour décrire un processus : événements,
+étapes, décisions, tâches humaines, tâches automatiques et transitions.
+Le fichier .bpmn contient le modèle en XML. Il contient aussi des informations
+de représentation graphique afin que l'outil de modélisation puisse afficher
+le diagramme. Ce n'est donc pas simplement une image.
+
+Flowable est le moteur qui charge une définition BPMN, crée une instance
+lorsqu'on lui demande de démarrer le processus, conserve son état et son
+historique, et attend une décision lorsqu'il arrive à une tâche humaine.
+Le code Java fournit les données du dossier, déclenche le processus, réalise
+les tâches techniques et transmet les décisions de l'administrateur.
+
+Dans application.yml, Flowable recherche les fichiers du dossier
+classpath:/processes/ avec l'extension .bpmn. Au démarrage, les modèles y sont
+déployés comme définitions de processus. Le code Java démarre une instance en
+utilisant l'identifiant (process id) déclaré dans le fichier.
+
+Dans les diagrammes :
+- Un événement de début/fin marque les limites du processus.
+- Une tâche utilisateur (userTask) attend une action du client ou de l'admin.
+- Une tâche de service (serviceTask) appelle une classe Java appelée delegate.
+- Une passerelle exclusive (exclusiveGateway) choisit un chemin selon une
+  variable, par exemple decision == 'APPROVE'.
+- Un événement timer (boundaryEvent) représente un délai associé à une tâche.
+- Une séquence (sequenceFlow) relie les étapes.
+
+
+2. LES TROIS PROCESSUS FLOWABLE DU PROJET
+
+A. Virement — transfer-validation-camunda.bpmn
+
+Identifiant du processus : transferValidationProcess.
+Fichier : back/banking-api/src/main/resources/processes/transfer-validation-camunda.bpmn
+
+Parcours représenté :
+1. Le processus démarre pour un virement sensible.
+2. Le système vérifie le statut du compte, puis le solde, puis le bénéficiaire.
+   Une vérification négative conduit à une notification et à une fin de rejet.
+3. Si les vérifications passent, une tâche de validation est proposée au
+   groupe admin.
+4. L'administrateur peut approuver, rejeter ou demander des informations.
+   Une demande d'informations peut retourner vers le client, dans la limite
+   configurée par le modèle.
+5. En cas d'approbation, le delegate d'exécution tente le traitement. Le modèle
+   prévoit un contrôle du résultat, une tentative de reprise et une notification.
+6. Le processus prévoit également des délais client/admin, une escalade et une
+   trace d'audit.
+
+Intégration Java :
+- TransactionValidationService déclenche ce processus pour les virements qui
+  dépassent le seuil métier configuré, puis fournit des variables comme
+  userId, amount, transactionId et supportTicketId.
+- AgentToolService choisit un processus pour les demandes sensibles, selon
+  l'intention ; le démarrage du processus de virement par dépassement de seuil
+  est également réalisé par TransactionValidationService.
+- FlowableService vérifie qu'une définition active existe et démarre une
+  instance avec startProcessInstanceByKey.
+- FlowableTaskCompletionService reçoit la décision de tâche, la valide,
+  complète la tâche Flowable et réconcilie le résultat avec la transaction
+  ou le ticket.
+- Les delegates Java associés se trouvent dans
+  back/banking-api/src/main/java/com/fintech/banking/workflow/delegate/.
+
+B. Signalement de fraude — fraude-validation.bpmn
+
+Identifiant du processus : fraudValidationProcess.
+Fichier : back/banking-api/src/main/resources/processes/fraude-validation.bpmn
+
+Parcours représenté :
+1. Un signalement de fraude démarre le workflow ; le compte est vérifié.
+2. Une tâche d'analyse est affectée au groupe admin.
+3. L'administrateur peut choisir de bloquer la carte, de contacter le client
+   pour demander des justificatifs ou de conclure à un faux positif.
+4. Le modèle prévoit la vérification du résultat du blocage, les notifications
+   et l'enregistrement d'une trace d'audit.
+5. Il prévoit une escalade si le délai est dépassé ou si trop de demandes
+   d'informations sont nécessaires.
+
+Intégration Java :
+- AgentToolService sélectionne fraudValidationProcess pour les intentions
+  FRAUD, STOLEN_CARD et CLAIM, puis appelle
+  SupportTicketService.createTicketWithWorkflow.
+- Les tâches de décision sont complétées par FlowableTaskCompletionService.
+- BlockCardDelegate correspond à l'action de blocage ; NotifyDelegate,
+  AuditLogDelegate et EscaladeDelegate couvrent les actions portant ces noms.
+
+C. Modification de données sensibles — data-update-validation.bpmn
+
+Identifiant du processus : dataUpdateValidationProcess.
+Fichier : back/banking-api/src/main/resources/processes/data-update-validation.bpmn
+
+Parcours représenté :
+1. Le client doit fournir une pièce d'identité ou un justificatif.
+2. L'administrateur examine la demande et la preuve.
+3. Il peut approuver, rejeter ou demander des informations complémentaires.
+   Le parcours peut revenir au client, avec une limite de demandes.
+4. Le modèle prévoit des délais client/admin, une escalade, une notification
+   de décision et une trace d'audit.
+
+Intégration Java :
+- AgentToolService sélectionne cette clé pour UPDATE_SENSITIVE_DATA et crée
+  le ticket avec son workflow.
+- SupportTicketService conserve le justificatif, vérifie que le ticket
+  appartient au client et complète la tâche taskFournirPreuve quand le
+  document attendu est téléversé.
+- La décision admin passe par FlowableTaskCompletionService.
+
+Important pour l'oral : un fichier BPMN montre le processus prévu et ses
+conditions. Pour affirmer qu'une branche précise est effectivement exécutée,
+il faut pouvoir la montrer dans le code et/ou dans une démonstration.
+Présente les étapes comme le comportement du modèle ; ne prétends pas que
+toutes les branches ont été testées en soutenance si ce n'est pas le cas.
+
+
+3. FICHIERS JAVA QUI RELIENT LE BACKEND A FLOWABLE
+
+- config/FlowableConfig.java : expose les services Flowable nécessaires au
+  reste de l'application.
+- resources/application.yml : configure le chargement automatique des
+  fichiers BPMN, le moteur et son niveau d'historique.
+- service/FlowableService.java : démarre une instance par sa clé, liste les
+  définitions et tâches admin, lit les variables et l'historique, complète
+  une tâche.
+- service/TransactionValidationService.java : décide si un virement doit
+  entrer dans la validation et prépare les variables du processus.
+- service/AgentToolService.java : transforme certaines demandes détectées par
+  l'agent en tickets sensibles et choisit le processus correspondant.
+- service/SupportTicketService.java : crée/associe les tickets aux processus
+  et gère le justificatif de la demande de modification.
+- service/FlowableTaskCompletionService.java : valide et transmet les décisions
+  d'approbation/rejet, complète les tâches et met à jour les objets métier.
+- controller/FlowableAdminController.java : expose les opérations admin pour
+  consulter et compléter les tâches via l'API.
+- workflow/delegate/VerifyAccountStatusDelegate.java : vérifie le statut du
+  compte pour le workflow.
+- workflow/delegate/VerifyBalanceDelegate.java : vérifie le solde disponible.
+- workflow/delegate/VerifyBeneficiaryDelegate.java : vérifie le bénéficiaire.
+- workflow/delegate/ExecuteTransferDelegate.java : tente le traitement du
+  virement dans le prototype.
+- workflow/delegate/BlockCardDelegate.java : exécute le blocage de carte prévu.
+- workflow/delegate/NotifyDelegate.java : produit la notification prévue.
+- workflow/delegate/AuditLogDelegate.java : enregistre l'événement d'audit.
+- workflow/delegate/EscaladeDelegate.java : traite le chemin d'escalade.
+
+
+4. SERVICE PYTHON ai-agent — SON ROLE
+
+Le README de ai-agent décrit le service Python comme un secours optionnel,
+pas comme le moteur principal du chatbot. Le backend Java reste responsable
+de l'authentification métier, des données, des validations, des virements et
+du routage BPMN. Le service Python n'accède pas directement à PostgreSQL :
+pour lire ou demander une opération, il appelle les API Java avec le jeton
+Bearer de l'utilisateur. Java continue d'appliquer ses propres contrôles.
+
+Le point d'entrée HTTP est main.py. L'agent interprète la demande, peut garder
+un contexte de conversation, et utilise les outils de tools.py via
+tool_executor.py. La recherche locale TF-IDF est distincte du RAG principal
+configuré dans le backend Java. Ne présente donc pas ces deux chemins comme
+un seul moteur RAG.
+
+
+5. FICHIERS PYTHON DE ai-agent, UN PAR UN
+
+Fichiers du service principal :
+
+- main.py : application FastAPI ; expose /health et /chat, vérifie le jeton
+  JWT et applique une limite simple de requêtes par utilisateur avant
+  d'appeler run_agent.
+- config.py : charge les variables d'environnement, l'URL du backend, les
+  clés des fournisseurs LLM et les paramètres d'e-mail.
+- agent.py : logique conversationnelle de secours ; reconnaît des demandes,
+  extrait des paramètres de virement, gère les confirmations et les petites
+  sessions en mémoire, appelle des outils ou la recherche locale, et formule
+  la réponse.
+- llm.py : construit la consigne de l'agent, appelle Ollama puis les
+  fournisseurs OpenAI/Groq si configurés, et tente de récupérer une décision
+  structurée en JSON.
+- tools.py : clients HTTP vers certaines API Java : profil/solde, historique
+  des transactions, comptes disponibles, virements.
+- tool_executor.py : choisit l'outil à lancer, vérifie les arguments de
+  virement, applique une courte fenêtre anti-doublon en mémoire et retente
+  certains appels en cas d'erreur.
+- schemas.py : modèles Pydantic de validation pour des arguments d'outil,
+  notamment un montant positif et un compte destinataire.
+- memory_store.py : conserve un historique local JSON et construit un contexte
+  court pour les conversations ; ce n'est pas la base de données bancaire.
+- ticket.py : appelle l'API Java pour créer un ticket de support.
+- escalation.py : compte certains échecs de réponse et propose une escalade
+  vers un ticket ; contient également une fonction d'escalade.
+- rag_bridge.py : petit script CLI de démonstration/intégration. Il classe une
+  question avec des règles simples, s'authentifie auprès du backend, crée une
+  session et un agent, puis appelle l'API de décision. Ce n'est pas le serveur
+  FastAPI principal.
+
+Modules utilitaires séparés :
+
+- rag/rag_engine.py : recherche locale TF-IDF ; découpe les textes, crée ou
+  charge un index vectorisé et retourne le meilleur extrait si son score
+  dépasse le seuil.
+- rag/build_rag.py : commande de construction manuelle de l'index local.
+- rag/__init__.py : marque rag comme paquet Python ; fichier vide actuellement.
+- audit.py : écrit des lignes JSON dans audit.log ; utilitaire local, distinct
+  de la piste d'audit Java/Flowable.
+- email_service.py : utilitaire SMTP pour envoyer un e-mail ; ne le présente
+  pas comme un parcours actif du service sans vérifier son appel effectif.
+
+Données :
+
+- rag/data.txt : petites fiches de connaissance utilisées par la recherche
+  locale TF-IDF. C'est un jeu de données de démonstration ; les exemples et
+  devises ne sont pas forcément ceux du contexte tunisien de FinBank.
+- rag/vector_store.pkl : index calculé par rag_engine.py ; fichier généré et
+  ignoré par Git, il peut être recréé depuis data.txt.
+- data/memory.json : historique conversationnel local généré à l'exécution ;
+  ce n'est pas une donnée bancaire source.
+
+Configuration et lancement :
+
+- requirements.txt : bibliothèques Python et versions/plages utilisées par
+  le service.
+- Dockerfile : construit l'image Python, installe requirements.txt et démarre
+  Uvicorn sur le port 8001.
+- .env.example : exemple de paramètres à configurer localement ; les secrets
+  réels doivent rester hors du dépôt.
+- README.md : explique l'architecture du service, ses responsabilités et son
+  lancement.
+- .gitignore : exclut les environnements locaux, caches, journaux, mémoire et
+  index générés.
+- .dockerignore : exclut du contexte Docker les éléments inutiles au build.
+- __pycache__/*.pyc : bytecode généré automatiquement par Python ; ce ne sont
+  pas des modules source à présenter.
+
+
+6. PARCOURS SIMPLIFIE D'UNE DEMANDE DANS LE SERVICE PYTHON
+
+1. main.py reçoit la requête, vérifie qu'elle contient une question et un
+   jeton Bearer utilisable, puis limite la fréquence d'appel.
+2. agent.py choisit le contexte de conversation, reconnaît les intentions
+   simples ou utilise llm.py en complément.
+3. Pour une lecture ou un outil, tool_executor.py appelle tools.py ou ticket.py.
+   L'appel bancaire est dirigé vers l'API Java, pas directement vers la base.
+4. Si aucun outil ne convient, l'agent peut interroger rag/rag_engine.py,
+   puis retourner une réponse.
+5. main.py renvoie la réponse au backend appelant avec quelques actions
+   suggérées.
+
+La mémoire en dictionnaire de agent.py est temporaire et locale au processus ;
+la mémoire JSON est un mécanisme de secours. Ce service est optionnel dans
+l'architecture et ne doit pas être présenté comme l'autorité qui valide les
+opérations.
+
+Réponse courte sur Python :
+
+« Le service Python est un complément de secours. main.py reçoit les demandes,
+agent.py choisit le traitement, llm.py peut aider à comprendre une formulation
+ambiguë et tool_executor.py appelle les API Java appropriées. Le Java garde
+l'autorité sur les comptes, les règles métier et l'exécution des opérations. »
+
+
+7. REPONSE COURTE AU JURY
+
+« Flowable exécute les processus décrits dans les fichiers BPMN. Le backend
+Java sélectionne le processus adapté, lui transmet les variables du dossier,
+puis récupère la tâche à traiter par l'administrateur. Les décisions font
+avancer le processus, et les delegates Java réalisent les actions automatiques
+comme les vérifications, notifications, audit ou escalade. Le service Python,
+lui, est un composant de secours pour comprendre certaines demandes et
+formuler une réponse ; il appelle les API Java et ne prend pas la décision
+bancaire finale. »
+
+
+8. POINTS A NE PAS SURVENDRE
+
+- Le fichier transfer-validation-camunda.bpmn comporte encore le libellé
+  « EUR » alors que le discours du projet présente le seuil en TND. Expliquer
+  le seuil depuis la configuration métier et corriger le diagramme avant de
+  l'afficher comme version finale.
+- Le Python contient des fonctions auxiliaires et des parcours de
+  démonstration qui ne sont pas tous branchés au parcours principal. Dire
+  « le dépôt contient » ou « le modèle prévoit » lorsque l'intégration ou le
+  test effectif n'a pas été confirmé.
+- rag/data.txt contient des exemples de démonstration qui ne doivent pas être
+  présentés comme une documentation officielle ou une politique bancaire
+  tunisienne.
+- Le RAG local TF-IDF de Python n'est pas le même composant que la recherche
+  documentaire configurée dans le backend Java.
+- L'approbation Flowable n'est pas un règlement interbancaire réel ; FinBank
+  reste un prototype académique.

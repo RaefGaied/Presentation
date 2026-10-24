@@ -108,7 +108,7 @@ html, body {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   INTERFACE STAGE — Web + Mobile side by side
+   INTERFACE STAGE — Desktop web interfaces side by side
    ═══════════════════════════════════════════════════════════════ */
 .interface-stage {
     width: 100%;
@@ -201,33 +201,26 @@ html, body {
     background: #f8fafc;
 }
 
-/* Mobile phone mockup */
-.device--mobile .device__frame {
-    width: 22vw;
-    max-width: 260px;
-    min-width: 180px;
-    border-radius: 28px;
-    padding: 0.5rem;
-    position: relative;
+.device--web:not(.device--web-secondary) .device__frame {
+    width: 48vw;
+    max-width: 620px;
 }
 
-.device__notch {
-    width: 40%;
-    height: 18px;
-    background: #0f172a;
-    border-radius: 0 0 12px 12px;
-    position: absolute;
-    top: 0.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
+.device--web-secondary .device__frame {
+    width: 38vw;
+    max-width: 500px;
 }
 
-.device--mobile .device__screen {
-    border-radius: 22px;
-    height: 48vh;
+.device--web-secondary .device__screen {
+    height: 32vh;
     background: #f8fafc;
-    border: 1px solid rgba(0,119,204,0.08);
+}
+
+.browser-chrome--application .browser-url {
+    text-align: left;
+    font-weight: 600;
+    background: transparent;
+    border-color: transparent;
 }
 
 .device__label {
@@ -280,19 +273,16 @@ html, body {
         flex-direction: column;
         gap: 2vh;
     }
-    .device--web .device__frame {
+    .device--web .device__frame,
+    .device--web-secondary .device__frame {
         width: 80vw;
         max-width: 600px;
     }
-    .device--mobile .device__frame {
-        width: 40vw;
-        max-width: 220px;
-    }
     .device--web .device__screen {
-        height: 28vh;
+        height: 24vh;
     }
-    .device--mobile .device__screen {
-        height: 32vh;
+    .device--web-secondary .device__screen {
+        height: 24vh;
     }
 }
 
@@ -482,6 +472,70 @@ html, body {
         opacity: 1 !important;
         transform: none !important;
         animation: none !important;
+    }
+}
+
+.interface-stage--support {
+    max-width: 1600px;
+    gap: 1.5vw;
+}
+
+.interface-stage--support .device {
+    width: 29vw;
+    max-width: 440px;
+}
+
+.interface-stage--support .device--web .device__frame {
+    width: 100%;
+    max-width: none;
+}
+
+.interface-stage--support .device--web .device__screen {
+    height: 33vh;
+}
+
+.interface-stage--support .device__label {
+    max-width: 100%;
+    text-align: center;
+    font-size: clamp(0.65rem, 0.8vw, 0.85rem);
+}
+
+@media (max-width: 900px) {
+    .interface-stage--support {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-content: center;
+        gap: 1vh 2vw;
+        overflow-y: auto;
+    }
+
+    .interface-stage--support .device {
+        width: 42vw;
+    }
+
+    .interface-stage--support .device--web .device__frame {
+        width: 100%;
+    }
+
+    .interface-stage--support .device--web .device__screen {
+        height: 23vh;
+    }
+}
+
+@media (max-width: 600px) {
+    .interface-stage--support {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        gap: 1.5vh;
+    }
+
+    .interface-stage--support .device {
+        width: 78vw;
+    }
+
+    .interface-stage--support .device--web .device__screen {
+        height: 25vh;
     }
 }
 

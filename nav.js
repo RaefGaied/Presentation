@@ -228,13 +228,12 @@
         goToSlide(current + 1);
     });
 
-    /* ── Host logo (all slides except cover) ── */
+    /* ── FinBank brand logo (all slides except cover) ── */
     if (match && current > 1) {
-        const logo = document.createElement('img');
+        const logo = document.createElement('div');
         logo.className = 'slide-logo';
-        logo.src = '../assets/vermeg.jpg';
-        logo.alt = 'VERMEG';
-        logo.style.borderRadius = '6px';
+        logo.setAttribute('aria-label', 'FinBank');
+        logo.innerHTML = '<span class="slide-logo__fin">Fin</span><span class="slide-logo__bank">Bank</span>';
         document.body.appendChild(logo);
     }
 

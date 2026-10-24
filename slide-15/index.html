@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slide 15 : Méthodologie Scrum</title>
+    <title>Slide 15 : Méthodologie de gestion du projet</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../nav-hint.css">
+    <link rel="stylesheet" href="../calm-override.css">
 </head>
 <body>
     <canvas id="bg-canvas"></canvas>
@@ -21,7 +22,7 @@
         <header class="slide__header">
             <div class="slide__eyebrow">CADRE MÉTHODOLOGIQUE DU PROJET</div>
             <h1 class="slide__title">Méthodologie de gestion du projet</h1>
-            <p class="slide__subtitle">Comparaison rigoureuse et sélection de l'approche agile adaptée à FinBank</p>
+            <p class="slide__subtitle">Pourquoi Scrum pour FinBank ?</p>
         </header>
 
         <div class="content-split">
@@ -33,14 +34,12 @@
                         <div class="methodo-card__top">
                             <span class="methodo-code">XP</span>
                             <div class="methodo-meta">
-                                <span class="methodo-badge">Méthode Agile</span>
+                                <span class="methodo-badge">Agile</span>
                                 <h3 class="methodo-name">Extreme Programming</h3>
                             </div>
                         </div>
                         <div class="methodo-procon">
-                            <div class="procon-item procon-pro"><span class="procon-icon procon-icon--pro">✓</span>Itératif et incrémental</div>
-                            <div class="procon-item procon-pro"><span class="procon-icon procon-icon--pro">✓</span>Tests en continu (TDD)</div>
-                            <div class="procon-item procon-con"><span class="procon-icon procon-icon--con">✕</span>Documentation minime</div>
+                            <div class="procon-item procon-pro"><span class="procon-icon procon-icon--pro">✓</span>Itérations · TDD</div>
                             <div class="procon-item procon-con"><span class="procon-icon procon-icon--con">✕</span>Exigeante en ressources</div>
                         </div>
                     </div>
@@ -50,15 +49,13 @@
                         <div class="methodo-card__top">
                             <span class="methodo-code">RUP</span>
                             <div class="methodo-meta">
-                                <span class="methodo-badge">Processus Lourd</span>
+                                <span class="methodo-badge">Processus structuré</span>
                                 <h3 class="methodo-name">Rational Unified</h3>
                             </div>
                         </div>
                         <div class="methodo-procon">
-                            <div class="procon-item procon-pro"><span class="procon-icon procon-icon--pro">✓</span>Cadre structuré (IBM)</div>
-                            <div class="procon-item procon-pro"><span class="procon-icon procon-icon--pro">✓</span>Phases bien définies</div>
-                            <div class="procon-item procon-con"><span class="procon-icon procon-icon--con">✕</span>Complexe et lourd</div>
-                            <div class="procon-item procon-con"><span class="procon-icon procon-icon--con">✕</span>Peu adapté aux petites équipes</div>
+                            <div class="procon-item procon-pro"><span class="procon-icon procon-icon--pro">✓</span>Phases structurées</div>
+                            <div class="procon-item procon-con"><span class="procon-icon procon-icon--con">✕</span>Cadre lourd</div>
                         </div>
                     </div>
 
@@ -72,10 +69,8 @@
                             </div>
                         </div>
                         <div class="methodo-procon">
-                            <div class="procon-item procon-pro"><span class="procon-icon procon-icon--pro">✓</span>Fonctionnel + technique</div>
-                            <div class="procon-item procon-pro"><span class="procon-icon procon-icon--pro">✓</span>Modélisation robuste</div>
-                            <div class="procon-item procon-con"><span class="procon-icon procon-icon--con">✕</span>Processus rigide</div>
-                            <div class="procon-item procon-con"><span class="procon-icon procon-icon--con">✕</span>Long à mettre en œuvre</div>
+                            <div class="procon-item procon-pro"><span class="procon-icon procon-icon--pro">✓</span>Deux axes : fonctionnel · technique</div>
+                            <div class="procon-item procon-con"><span class="procon-icon procon-icon--con">✕</span>Mise en œuvre longue</div>
                         </div>
                     </div>
 
@@ -88,15 +83,13 @@
                         <div class="methodo-card__top">
                             <span class="methodo-code methodo-code--scrum">SCRUM</span>
                             <div class="methodo-meta">
-                                <span class="methodo-badge methodo-badge--selected">Méthode Agile Retenue</span>
-                                <h3 class="methodo-name">Scrum Framework</h3>
+                                <span class="methodo-badge methodo-badge--selected">Méthode retenue</span>
+                                <h3 class="methodo-name">Scrum</h3>
                             </div>
                         </div>
                         <div class="methodo-procon">
-                            <div class="procon-item procon-pro procon-hero"><span class="procon-icon procon-icon--hero">✓</span><strong>Itératif par sprints :</strong> Livrables continus</div>
-                            <div class="procon-item procon-pro procon-hero"><span class="procon-icon procon-icon--hero">✓</span><strong>Priorités adaptables :</strong> Conformité BCT</div>
-                            <div class="procon-item procon-pro procon-hero"><span class="procon-icon procon-icon--hero">✓</span><strong>Rapide et souple :</strong> Démos VERMEG</div>
-                            <div class="procon-item procon-pro procon-hero"><span class="procon-icon procon-icon--hero">✓</span><strong>Résultat conforme :</strong> Qualité bancaire assurée</div>
+                            <div class="procon-item procon-pro procon-hero"><span class="procon-icon procon-icon--hero">✓</span>Sprints courts · livraisons régulières</div>
+                            <div class="procon-item procon-pro procon-hero"><span class="procon-icon procon-icon--hero">✓</span>Priorités ajustées · retours intégrés</div>
                         </div>
                     </div>
                 </div>
@@ -108,9 +101,9 @@
                     <div class="scrum-engine-header">
                         <div class="engine-badge-live">
                             <span class="live-dot"></span>
-                            <span>MOTEUR D'ITÉRATION AGILE</span>
+                            <span>CYCLE AGILE</span>
                         </div>
-                        <div class="engine-cadence-chip">Cadence : 2 à 4 semaines</div>
+                        <div class="engine-cadence-chip">Sprint : 2 à 4 semaines</div>
                     </div>
 
                     <div class="scrum-cycle-container">
@@ -161,8 +154,8 @@
                                     </svg>
                                 </div>
                                 <span class="hub-title">SPRINT</span>
-                                <span class="hub-duration">2 - 4 semaines</span>
-                                <span class="hub-tag">Incrément Livrable</span>
+                                <span class="hub-duration">Itération courte</span>
+                                <span class="hub-tag">Livrable</span>
                             </div>
                         </div>
 
@@ -175,7 +168,7 @@
                             </div>
                             <div class="pod-info">
                                 <span class="pod-label">Backlog</span>
-                                <span class="pod-desc">User Stories &amp; BCT</span>
+                                <span class="pod-desc">Besoins</span>
                             </div>
                         </div>
 
@@ -187,7 +180,7 @@
                             </div>
                             <div class="pod-info">
                                 <span class="pod-label">Planification</span>
-                                <span class="pod-desc">Capacité &amp; Vélocité</span>
+                                <span class="pod-desc">Plan du sprint</span>
                             </div>
                         </div>
 
@@ -199,7 +192,7 @@
                             </div>
                             <div class="pod-info">
                                 <span class="pod-label">Développement</span>
-                                <span class="pod-desc">Microservices &amp; Tests</span>
+                                <span class="pod-desc">Fonctionnalités · tests</span>
                             </div>
                         </div>
 
@@ -211,7 +204,7 @@
                             </div>
                             <div class="pod-info">
                                 <span class="pod-label">Review</span>
-                                <span class="pod-desc">Démo &amp; Validation</span>
+                                <span class="pod-desc">Démo · validation</span>
                             </div>
                         </div>
 
@@ -223,7 +216,7 @@
                             </div>
                             <div class="pod-info">
                                 <span class="pod-label">Rétrospective</span>
-                                <span class="pod-desc">Feedback &amp; Vélocité</span>
+                                <span class="pod-desc">Amélioration</span>
                             </div>
                         </div>
 
@@ -235,7 +228,7 @@
                             </div>
                             <div class="pod-info">
                                 <span class="pod-label">Déploiement</span>
-                                <span class="pod-desc">Docker &amp; Release</span>
+                                <span class="pod-desc">Livraison</span>
                             </div>
                         </div>
                     </div>

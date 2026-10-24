@@ -30,10 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         function updateTilt() {
-            curTiltX += (mouseY * -7 - curTiltX) * 0.08;
-            curTiltY += (mouseX * 9 - curTiltY) * 0.08;
+            curTiltX += (mouseY * -7 - curTiltX) * 0.03; // Ralenti de 0.08 à 0.03
+            curTiltY += (mouseX * 9 - curTiltY) * 0.03; // Ralenti de 0.08 à 0.03
             brandmark.style.setProperty('--tiltX', `${curTiltX.toFixed(2)}deg`);
-            brandmark.style.setProperty('--tiltY', `${curTiltY.toFixed(2)}deg`);
+            brandmark.style.setProperty('--tiltY', `${curTiltY.toFixed(2)}deg}`);
             requestAnimationFrame(updateTilt);
         }
         setTimeout(() => {

@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slide 17 : Interface Shopping</title>
+    <title>Slide 26 : Interface cartes et dévoilement sécurisé</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../nav-hint.css">
+    <link rel="stylesheet" href="../calm-override.css">
 </head>
 <body>
     <canvas id="bg-canvas"></canvas>
@@ -32,20 +33,25 @@
                         <div class="browser-url">finbank.local/cards</div>
                     </div>
                     <div class="device__screen">
-                        <img src="../assets/carte_cree.png" alt="Cartes Bancaires FinBank">
+                        <img src="../assets/interface_cartes.png" alt="Gestion des cartes bancaires FinBank">
                     </div>
                 </div>
-                <span class="device__label">Portail Client Web &mdash; Gestion des Cartes</span>
+                <span class="device__label">Portail Client Web — gestion des cartes</span>
             </div>
 
-            <div class="device device--mobile" data-delay="2">
+            <div class="device device--web device--web-secondary" data-delay="2">
                 <div class="device__frame">
-                    <div class="device__notch"></div>
+                    <div class="browser-chrome">
+                        <div class="browser-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="browser-url">finbank.local/cards/details</div>
+                    </div>
                     <div class="device__screen">
-                        <img src="../assets/ui_security_event_admin_page.png" alt="Journal d'audit du dévoilement">
+                        <img src="../assets/devoilement_securisee.png" alt="Détail de carte masqué avec révélation sécurisée">
                     </div>
                 </div>
-                <span class="device__label">Audit Log &mdash; Tra&ccedil;abilit&eacute; Imm&eacute;diate</span>
+                <span class="device__label">D&eacute;voilement s&eacute;curis&eacute; du CVV</span>
             </div>
         </div>
 
@@ -58,8 +64,8 @@
     <div class="gallery" id="gallery">
         <div class="gallery__backdrop"></div>
         <div class="gallery__stage">
-            <img class="gallery__img" src="../assets/carte_cree.png" alt="Cartes Bancaires FinBank">
-            <img class="gallery__img" src="../assets/ui_security_event_admin_page.png" alt="Journal d'audit du dévoilement FinBank">
+        <img class="gallery__img" src="../assets/interface_cartes.png" alt="Gestion des cartes bancaires FinBank">
+        <img class="gallery__img" src="../assets/devoilement_securisee.png" alt="Détail de carte masqué avec révélation sécurisée">
         </div>
 
         <div class="gallery__controls">

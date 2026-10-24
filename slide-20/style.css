@@ -1,4 +1,4 @@
-/* Slide 20 : Architecture Globale FinBank — GIF + Dynamic Step Callout */
+/* Slide 20 : Architecture Globale FinBank */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -58,8 +58,8 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 2vh 3vw 8vh;
-    gap: 1.2vh;
+    padding: 2vh 3vw 5rem;
+    gap: 0.8vh;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -106,115 +106,12 @@ html, body {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   STEP CALLOUT BOX
-   ═══════════════════════════════════════════════════════════════ */
-.step-callout {
-    position: relative;
-    width: 100%;
-    max-width: 980px;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 102, 204, 0.18);
-    border-radius: 18px;
-    padding: 0.9rem 1.4rem 0.7rem 1.4rem;
-    box-shadow:
-        0 4px 24px rgba(0, 102, 204, 0.08),
-        0 1px 4px rgba(0, 0, 0, 0.04);
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    flex-shrink: 0;
-    opacity: 0;
-    transform: translateY(-12px);
-    overflow: hidden;
-    min-height: 72px;
-}
-
-/* Badge with step number */
-.step-callout__badge {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #0066cc 0%, #6366f1 100%);
-    box-shadow: 0 4px 16px rgba(0, 102, 204, 0.3);
-    transition: background 0.5s ease;
-}
-
-.step-callout__icon {
-    font-size: 1.15rem;
-    line-height: 1;
-}
-
-.step-callout__num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    font-weight: 600;
-    color: rgba(255,255,255,0.7);
-    letter-spacing: 0.05em;
-    line-height: 1;
-}
-
-/* Text body */
-.step-callout__body {
-    flex: 1;
-}
-
-.step-callout__text {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(0.78rem, 1.1vw, 0.95rem);
-    font-weight: 500;
-    color: #1e293b;
-    line-height: 1.55;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-/* Progress bar at bottom */
-.step-progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: rgba(0, 102, 204, 0.08);
-    border-radius: 0 0 18px 18px;
-    overflow: hidden;
-}
-
-.step-progress__bar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #0066cc, #10b981);
-    border-radius: 0 0 18px 18px;
-    transition: width linear;
-}
-
-/* Fade text in/out animation */
-.step-callout__text.fading-out {
-    opacity: 0;
-    transform: translateY(-6px);
-}
-.step-callout__text.fading-in {
-    opacity: 0;
-    transform: translateY(6px);
-}
-.step-callout__text.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* ═══════════════════════════════════════════════════════════════
    GIF CONTAINER
    ═══════════════════════════════════════════════════════════════ */
 .gif-container {
     flex: 1;
     width: 100%;
-    max-width: 980px;
+    max-width: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -225,12 +122,13 @@ html, body {
 
 .gif-frame {
     position: relative;
-    width: 100%;
+    width: auto;
     height: 100%;
-    max-height: calc(100vh - 26vh);
+    max-height: calc(100vh - 11rem);
+    aspect-ratio: 3 / 4;
     background: #ffffff;
     border-radius: 20px;
-    padding: 0.6rem;
+    padding: 0.3rem;
     box-shadow:
         0 20px 60px rgba(15, 23, 42, 0.1),
         0 4px 16px rgba(0, 102, 204, 0.08),
@@ -253,7 +151,6 @@ html, body {
 .gif-img {
     width: 100%;
     height: 100%;
-    max-height: calc(100vh - 30vh);
     object-fit: contain;
     border-radius: 14px;
     display: block;
@@ -320,29 +217,6 @@ html, body {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   STEP INDICATOR DOTS (bottom of callout right side)
-   ═══════════════════════════════════════════════════════════════ */
-.step-dots {
-    display: flex;
-    gap: 5px;
-    flex-shrink: 0;
-}
-
-.step-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: rgba(0, 102, 204, 0.18);
-    transition: background 0.3s ease, transform 0.3s ease;
-    cursor: default;
-}
-
-.step-dot.active {
-    background: #0066cc;
-    transform: scale(1.25);
-}
-
-/* ═══════════════════════════════════════════════════════════════
    REDUCED MOTION
    ═══════════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
@@ -350,7 +224,6 @@ html, body {
     .slide__header,
     .slide__title,
     .slide__subtitle,
-    .step-callout,
     .gif-container,
     .navigation {
         opacity: 1 !important;
@@ -363,16 +236,7 @@ html, body {
    RESPONSIVE
    ═══════════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
-    .step-callout {
-        flex-direction: column;
-        padding: 0.8rem 1rem;
-        gap: 0.6rem;
-        text-align: center;
-        align-items: flex-start;
-    }
-    .step-callout__badge {
-        width: 42px; height: 42px;
-        border-radius: 10px;
-    }
+    .slide { padding-right: 2vw; padding-left: 2vw; }
+    .gif-frame { max-width: 96vw; }
     .gif-overlay-badge { display: none; }
 }

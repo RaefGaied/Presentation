@@ -36,7 +36,7 @@
             type = h === 0 ? 'card' : 'transfer';
         }
 
-        const sz = Math.max(22, s.size || 34);
+        const sz = Math.max(16, s.size || 26);
 
         // Theme palette determination based on type
         let theme = {
@@ -467,10 +467,21 @@
 
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
+        const isSectionSlide = Boolean(document.querySelector('.section'));
 
         let w = 0, h = 0, dpr = 1;
         let tick = 0;
         const mouse = { x: null, y: null };
+
+        // Initialiser les dimensions avant de créer les particules
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = Math.round(w * dpr);
+        canvas.height = Math.round(h * dpr);
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
         function resize() {
             dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -482,7 +493,6 @@
             canvas.style.height = h + 'px';
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         }
-        resize();
         window.addEventListener('resize', resize);
         window.addEventListener('mousemove', function(e) {
             mouse.x = e.clientX;
@@ -498,396 +508,358 @@
             return Math.min(1.2, Math.max(0.8, Math.min(w / 1400, h / 800)));
         }
 
-        // 1. LES GROS ORBES FINTECH QUI COMPRESSENT ET VONT ET VIENNENT
-        // Véritable déformation physique Squash & Stretch le long de la trajectoire
-        const ORBS = [
-            {
-                baseRelX: 0.14, baseRelY: 0.18,
-                baseRadius: 310,
-                r1: 0, g1: 102, b1: 204, // FinBank Sapphire Blue
-                r2: 6, g2: 182, b2: 212, // Electric Cyan
-                compressSpeed: 0.009,
-                compressionRatio: 0.38,
-                driftSpeedX: 0.0035, driftSpeedY: 0.0042,
-                driftAmpX: 110, driftAmpY: 75,
-                phase: 0.0,
-                pulseInterval: 280
-            },
-            {
-                baseRelX: 0.86, baseRelY: 0.82,
-                baseRadius: 330,
-                r1: 16, g1: 185, b1: 129, // Emerald Transaction Green
-                r2: 5, g2: 150, b2: 105,  // Deep Mint
-                compressSpeed: 0.008,
-                compressionRatio: 0.35,
-                driftSpeedX: 0.0038, driftSpeedY: 0.0032,
-                driftAmpX: 105, driftAmpY: 85,
-                phase: 1.8,
-                pulseInterval: 320
-            },
-            {
-                baseRelX: 0.84, baseRelY: 0.18,
-                baseRadius: 280,
-                r1: 234, g1: 88, b1: 12,  // VERMEG Amber
-                r2: 245, g2: 158, b2: 11, // Golden Sun
-                compressSpeed: 0.011,
-                compressionRatio: 0.40,
-                driftSpeedX: 0.0042, driftSpeedY: 0.0036,
-                driftAmpX: 95, driftAmpY: 70,
-                phase: 3.4,
-                pulseInterval: 260
-            },
-            {
-                baseRelX: 0.18, baseRelY: 0.82,
-                baseRadius: 290,
-                r1: 2, g1: 132, b1: 199,  // Sky Blue
-                r2: 99, g2: 102, b2: 241, // Royal Indigo
-                compressSpeed: 0.010,
-                compressionRatio: 0.36,
-                driftSpeedX: 0.0032, driftSpeedY: 0.0045,
-                driftAmpX: 115, driftAmpY: 80,
-                phase: 4.9,
-                pulseInterval: 300
-            }
+        // 1. PARTICULES GÉOMÉTRIQUES (style démo slide-10)
+        const PARTICLE_COUNT = 50;
+        const LINK_DIST = 180;
+        const particles = [];
+
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particles.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                originX: Math.random() * w,
+                originY: Math.random() * h,
+                phase: Math.random() * Math.PI * 2,
+                speed: Math.random() * 0.008 + 0.003,
+                amp: Math.random() * 20 + 10,
+                r: Math.random() * 1.8 + 0.6
+            });
+        }
+
+        // 2. ORBES GÉOMÉTRIQUES AVEC DÉGRADÉ (couleurs originales)
+        const orbColors = [
+            { r: 0, g: 102, b: 204 },    // FinBank Sapphire Blue
+            { r: 16, g: 185, b: 129 },   // Emerald Transaction Green
+            { r: 234, g: 88, b: 12 },    // VERMEG Amber
+            { r: 2, g: 132, b: 199 },    // Sky Blue
         ];
 
-        // 2. CHOSES QUI BAIGNENT : MÉDAILLONS BANCAIRES FLOTTANTS
-        // Positionnés judicieusement dans les zones calmes/périphériques
+        const orbs = [];
+        for (let i = 0; i < 5; i++) {
+            const c = orbColors[i % orbColors.length];
+            orbs.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                radius: Math.random() * 180 + 120,
+                color: c,
+                phaseX: Math.random() * Math.PI * 2,
+                phaseY: Math.random() * Math.PI * 2,
+                speedX: Math.random() * 0.0008 + 0.0003,
+                speedY: Math.random() * 0.0006 + 0.0002,
+                ampX: Math.random() * 60 + 40,
+                ampY: Math.random() * 60 + 40
+            });
+        }
+
+        // TOKENS (petits logos) avec mouvement très lent et transparent
         const TOKENS = [
             {
                 type: 'tnd',
-                baseSize: 34,
-                relX: 0.10, relY: 0.28,
-                curX: null, curY: null,
-                vx: 0, vy: 0,
-                bobSpeedY: 0.012, bobAmpY: 18,
-                bobSpeedX: 0.009, bobAmpX: 14,
-                rotSpeed: 0.007,
-                phase: 0.4
+                baseSize: 20,
+                curX: Math.random() * w,
+                curY: Math.random() * h,
+                vx: (Math.random() - 0.5) * 0.15, // Plus lent
+                vy: (Math.random() - 0.5) * 0.15, // Plus lent
+                rotSpeed: (Math.random() - 0.5) * 0.0003, // Plus lent
+                phase: Math.random() * Math.PI * 2,
+                opacity: 0,
+                targetOpacity: 0.10 + Math.random() * 0.06, // Plus transparent
+                fadeInSpeed: 0.0003 + Math.random() * 0.0002, // Fade in très doux
+                fadeOutSpeed: 0.0002 + Math.random() * 0.0001, // Fade out très doux
+                visible: false,
+                fadingOut: false,
+                lifeTime: 0,
+                maxLifeTime: 8000 + Math.random() * 4000, // Vie plus longue
+                nextAppear: Math.random() * 6000 + 3000 // Apparition plus lente
             },
             {
                 type: 'card',
-                baseSize: 36,
-                relX: 0.88, relY: 0.30,
-                curX: null, curY: null,
-                vx: 0, vy: 0,
-                bobSpeedY: 0.011, bobAmpY: 20,
-                bobSpeedX: 0.012, bobAmpX: 15,
-                rotSpeed: -0.006,
-                phase: 2.1
+                baseSize: 20,
+                curX: Math.random() * w,
+                curY: Math.random() * h,
+                vx: (Math.random() - 0.5) * 0.15,
+                vy: (Math.random() - 0.5) * 0.15,
+                rotSpeed: (Math.random() - 0.5) * 0.0003,
+                phase: Math.random() * Math.PI * 2,
+                opacity: 0,
+                targetOpacity: 0.10 + Math.random() * 0.06,
+                fadeInSpeed: 0.0003 + Math.random() * 0.0002,
+                fadeOutSpeed: 0.0002 + Math.random() * 0.0001,
+                visible: false,
+                fadingOut: false,
+                lifeTime: 0,
+                maxLifeTime: 8000 + Math.random() * 4000,
+                nextAppear: Math.random() * 6000 + 3000
             },
             {
                 type: 'shield',
-                baseSize: 32,
-                relX: 0.11, relY: 0.70,
-                curX: null, curY: null,
-                vx: 0, vy: 0,
-                bobSpeedY: 0.014, bobAmpY: 16,
-                bobSpeedX: 0.010, bobAmpX: 12,
-                rotSpeed: 0.005,
-                phase: 3.7
+                baseSize: 19,
+                curX: Math.random() * w,
+                curY: Math.random() * h,
+                vx: (Math.random() - 0.5) * 0.15,
+                vy: (Math.random() - 0.5) * 0.15,
+                rotSpeed: (Math.random() - 0.5) * 0.0003,
+                phase: Math.random() * Math.PI * 2,
+                opacity: 0,
+                targetOpacity: 0.10 + Math.random() * 0.06,
+                fadeInSpeed: 0.0003 + Math.random() * 0.0002,
+                fadeOutSpeed: 0.0002 + Math.random() * 0.0001,
+                visible: false,
+                fadingOut: false,
+                lifeTime: 0,
+                maxLifeTime: 8000 + Math.random() * 4000,
+                nextAppear: Math.random() * 6000 + 3000
             },
             {
                 type: 'transfer',
-                baseSize: 32,
-                relX: 0.86, relY: 0.68,
-                curX: null, curY: null,
-                vx: 0, vy: 0,
-                bobSpeedY: 0.013, bobAmpY: 18,
-                bobSpeedX: 0.011, bobAmpX: 15,
-                rotSpeed: -0.004,
-                phase: 5.2
+                baseSize: 19,
+                curX: Math.random() * w,
+                curY: Math.random() * h,
+                vx: (Math.random() - 0.5) * 0.15,
+                vy: (Math.random() - 0.5) * 0.15,
+                rotSpeed: (Math.random() - 0.5) * 0.0003,
+                phase: Math.random() * Math.PI * 2,
+                opacity: 0,
+                targetOpacity: 0.10 + Math.random() * 0.06,
+                fadeInSpeed: 0.0003 + Math.random() * 0.0002,
+                fadeOutSpeed: 0.0002 + Math.random() * 0.0001,
+                visible: false,
+                fadingOut: false,
+                lifeTime: 0,
+                maxLifeTime: 8000 + Math.random() * 4000,
+                nextAppear: Math.random() * 6000 + 3000
             },
             {
                 type: 'bpmn',
-                baseSize: 30,
-                relX: 0.48, relY: 0.09,
-                curX: null, curY: null,
-                vx: 0, vy: 0,
-                bobSpeedY: 0.010, bobAmpY: 12,
-                bobSpeedX: 0.013, bobAmpX: 16,
-                rotSpeed: 0.008,
-                phase: 1.2
+                baseSize: 18,
+                curX: Math.random() * w,
+                curY: Math.random() * h,
+                vx: (Math.random() - 0.5) * 0.15,
+                vy: (Math.random() - 0.5) * 0.15,
+                rotSpeed: (Math.random() - 0.5) * 0.0003,
+                phase: Math.random() * Math.PI * 2,
+                opacity: 0,
+                targetOpacity: 0.10 + Math.random() * 0.06,
+                fadeInSpeed: 0.0003 + Math.random() * 0.0002,
+                fadeOutSpeed: 0.0002 + Math.random() * 0.0001,
+                visible: false,
+                fadingOut: false,
+                lifeTime: 0,
+                maxLifeTime: 8000 + Math.random() * 4000,
+                nextAppear: Math.random() * 6000 + 3000
             },
             {
                 type: 'microservice',
-                baseSize: 30,
-                relX: 0.52, relY: 0.91,
-                curX: null, curY: null,
-                vx: 0, vy: 0,
-                bobSpeedY: 0.015, bobAmpY: 14,
-                bobSpeedX: 0.009, bobAmpX: 12,
-                rotSpeed: -0.006,
-                phase: 4.1
+                baseSize: 18,
+                curX: Math.random() * w,
+                curY: Math.random() * h,
+                vx: (Math.random() - 0.5) * 0.15,
+                vy: (Math.random() - 0.5) * 0.15,
+                rotSpeed: (Math.random() - 0.5) * 0.0003,
+                phase: Math.random() * Math.PI * 2,
+                opacity: 0,
+                targetOpacity: 0.10 + Math.random() * 0.06,
+                fadeInSpeed: 0.0003 + Math.random() * 0.0002,
+                fadeOutSpeed: 0.0002 + Math.random() * 0.0001,
+                visible: false,
+                fadingOut: false,
+                lifeTime: 0,
+                maxLifeTime: 8000 + Math.random() * 4000,
+                nextAppear: Math.random() * 6000 + 3000
             },
             {
                 type: 'vault',
-                baseSize: 28,
-                relX: 0.07, relY: 0.48,
-                curX: null, curY: null,
-                vx: 0, vy: 0,
-                bobSpeedY: 0.012, bobAmpY: 15,
-                bobSpeedX: 0.011, bobAmpX: 13,
-                rotSpeed: 0.005,
-                phase: 2.8
+                baseSize: 18,
+                curX: Math.random() * w,
+                curY: Math.random() * h,
+                vx: (Math.random() - 0.5) * 0.15,
+                vy: (Math.random() - 0.5) * 0.15,
+                rotSpeed: (Math.random() - 0.5) * 0.0003,
+                phase: Math.random() * Math.PI * 2,
+                opacity: 0,
+                targetOpacity: 0.10 + Math.random() * 0.06,
+                fadeInSpeed: 0.0003 + Math.random() * 0.0002,
+                fadeOutSpeed: 0.0002 + Math.random() * 0.0001,
+                visible: false,
+                fadingOut: false,
+                lifeTime: 0,
+                maxLifeTime: 8000 + Math.random() * 4000,
+                nextAppear: Math.random() * 6000 + 3000
             },
             {
                 type: 'eur',
-                baseSize: 28,
-                relX: 0.93, relY: 0.48,
-                curX: null, curY: null,
-                vx: 0, vy: 0,
-                bobSpeedY: 0.011, bobAmpY: 16,
-                bobSpeedX: 0.010, bobAmpX: 14,
-                rotSpeed: -0.005,
-                phase: 4.6
+                baseSize: 18,
+                curX: Math.random() * w,
+                curY: Math.random() * h,
+                vx: (Math.random() - 0.5) * 0.15,
+                vy: (Math.random() - 0.5) * 0.15,
+                rotSpeed: (Math.random() - 0.5) * 0.0003,
+                phase: Math.random() * Math.PI * 2,
+                opacity: 0,
+                targetOpacity: 0.10 + Math.random() * 0.06,
+                fadeInSpeed: 0.0003 + Math.random() * 0.0002,
+                fadeOutSpeed: 0.0002 + Math.random() * 0.0001,
+                visible: false,
+                fadingOut: false,
+                lifeTime: 0,
+                maxLifeTime: 8000 + Math.random() * 4000,
+                nextAppear: Math.random() * 6000 + 3000
             }
         ];
-
-        // 3. ÉTINCELLES DE LIQUIDITÉ (Particules dorées et cyan qui baignent doucement)
-        const SPARKS = [];
-        const SPARK_COLORS = ['#f59e0b', '#10b981', '#0066cc', '#06b6d4', '#ea580c'];
-        for (let i = 0; i < 22; i++) {
-            SPARKS.push({
-                x: Math.random(),
-                y: Math.random(),
-                speedY: 0.0003 + Math.random() * 0.0004,
-                driftSpeedX: 0.004 + Math.random() * 0.005,
-                driftAmpX: 15 + Math.random() * 20,
-                radius: 1.6 + Math.random() * 1.8,
-                color: SPARK_COLORS[i % SPARK_COLORS.length],
-                phase: Math.random() * Math.PI * 2,
-                opacity: 0.25 + Math.random() * 0.35
-            });
-        }
-
-        // 4. PÉRIMÈTRE FIBRE-OPTIQUE & PACKETS (Clean framing & Kafka Events)
-        const PERIMETER_NODES = [
-            { relX: 0.04, relY: 0.08, color: '#0066cc' },
-            { relX: 0.50, relY: 0.03, color: '#10b981' },
-            { relX: 0.96, relY: 0.08, color: '#0066cc' },
-            { relX: 0.97, relY: 0.50, color: '#ea580c' },
-            { relX: 0.96, relY: 0.92, color: '#10b981' },
-            { relX: 0.50, relY: 0.97, color: '#0066cc' },
-            { relX: 0.04, relY: 0.92, color: '#10b981' },
-            { relX: 0.03, relY: 0.50, color: '#ea580c' }
-        ];
-
-        const HIGHWAYS = [
-            { from: 0, to: 1, speed: 0.0028 },
-            { from: 1, to: 2, speed: 0.0026 },
-            { from: 2, to: 3, speed: 0.0030 },
-            { from: 3, to: 4, speed: 0.0027 },
-            { from: 4, to: 5, speed: 0.0029 },
-            { from: 5, to: 6, speed: 0.0025 },
-            { from: 6, to: 7, speed: 0.0028 },
-            { from: 7, to: 0, speed: 0.0026 }
-        ];
-
-        const PACKETS = [];
-        for (let i = 0; i < HIGHWAYS.length; i++) {
-            PACKETS.push({
-                highwayIdx: i,
-                progress: (i / HIGHWAYS.length + 0.15) % 1.0,
-                color: PERIMETER_NODES[i % PERIMETER_NODES.length].color
-            });
-        }
 
         // BOUCLE D'ANIMATION PRINCIPALE
         function renderFrame() {
             tick++;
-            ctx.clearRect(0, 0, w, h);
+            ctx.fillStyle = isSectionSlide
+                ? 'rgba(15, 23, 42, 0.18)'
+                : 'rgba(248, 250, 252, 0.18)';
+            ctx.fillRect(0, 0, w, h);
             const scaleFactor = getScale();
 
-            // ── 1. RENDER LES GROS ORBES COMPRESSANTS EN VA-ET-VIENT ──
-            for (let i = 0; i < ORBS.length; i++) {
-                const o = ORBS[i];
+            // ── 1. RENDU DES ORBES GÉOMÉTRIQUES (style démo slide-10) ──
+            for (const o of orbs) {
+                const ox = o.x + Math.sin(tick * o.speedX + o.phaseX) * o.ampX;
+                const oy = o.y + Math.cos(tick * o.speedY + o.phaseY) * o.ampY;
 
-                // Mouvement harmonisé en va-et-vient (Lissajous)
-                const ox = o.baseRelX * w + Math.sin(tick * o.driftSpeedX + o.phase) * o.driftAmpX;
-                const oy = o.baseRelY * h + Math.cos(tick * o.driftSpeedY + o.phase * 1.25) * o.driftAmpY;
+                const g = ctx.createRadialGradient(ox, oy, 0, ox, oy, o.radius);
+                g.addColorStop(0, `rgba(${o.color.r},${o.color.g},${o.color.b},0.045)`);
+                g.addColorStop(0.5, `rgba(${o.color.r},${o.color.g},${o.color.b},0.015)`);
+                g.addColorStop(1, `rgba(${o.color.r},${o.color.g},${o.color.b},0)`);
 
-                // Vecteur vitesse pour orienter l'axe de compression/étirement (Squash & Stretch)
-                const vx = Math.cos(tick * o.driftSpeedX + o.phase) * o.driftAmpX * o.driftSpeedX;
-                const vy = -Math.sin(tick * o.driftSpeedY + o.phase * 1.25) * o.driftAmpY * o.driftSpeedY;
-                const angle = Math.atan2(vy, vx);
-
-                // Compression harmonique : s'écrase lors des décélérations, s'étire en plein vol
-                const compressVal = Math.sin(tick * o.compressSpeed + o.phase) * o.compressionRatio;
-                const scaleMajor = 1.0 + compressVal;
-                const scaleMinor = 1.0 / Math.sqrt(scaleMajor); // Préserve le volume apparent de liquide
-
-                ctx.save();
-                ctx.translate(ox, oy);
-                ctx.rotate(angle);
-                ctx.scale(scaleMajor, scaleMinor);
-
-                const currentRadius = o.baseRadius * scaleFactor;
-                const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, currentRadius);
-                grad.addColorStop(0, `rgba(${o.r1}, ${o.g1}, ${o.b1}, 0.22)`);
-                grad.addColorStop(0.38, `rgba(${o.r2}, ${o.g2}, ${o.b2}, 0.09)`);
-                grad.addColorStop(0.75, `rgba(${o.r1}, ${o.g1}, ${o.b1}, 0.025)`);
-                grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-                ctx.fillStyle = grad;
+                ctx.fillStyle = g;
                 ctx.beginPath();
-                ctx.arc(0, 0, currentRadius, 0, Math.PI * 2);
+                ctx.arc(ox, oy, o.radius, 0, Math.PI * 2);
                 ctx.fill();
-                ctx.restore();
-
-                // Onde de compression douce (concentric liquidity ripple pulse)
-                const waveTick = (tick + o.phase * 60) % o.pulseInterval;
-                const waveProgress = waveTick / o.pulseInterval;
-                if (waveProgress > 0) {
-                    const waveR = (currentRadius * 0.2) + waveProgress * (currentRadius * 0.9);
-                    const waveAlpha = (1.0 - waveProgress) * 0.18;
-                    ctx.beginPath();
-                    ctx.arc(ox, oy, waveR, 0, Math.PI * 2);
-                    ctx.strokeStyle = `rgba(${o.r1}, ${o.g1}, ${o.b1}, ${waveAlpha})`;
-                    ctx.lineWidth = 1.2;
-                    ctx.stroke();
-                }
             }
 
-            // ── 2. ÉTINCELLES DE LIQUIDITÉ QUI BAIGNENT FLUIDEMENT ──
-            for (let i = 0; i < SPARKS.length; i++) {
-                const spk = SPARKS[i];
-                spk.y -= spk.speedY;
-                if (spk.y < -0.05) spk.y = 1.05;
-
-                const sx = spk.x * w + Math.sin(tick * spk.driftSpeedX + spk.phase) * spk.driftAmpX;
-                const sy = spk.y * h;
-                const sparkAlpha = spk.opacity * (0.8 + 0.2 * Math.sin(tick * 0.03 + spk.phase));
-
-                ctx.beginPath();
-                ctx.arc(sx, sy, spk.radius * scaleFactor, 0, Math.PI * 2);
-                ctx.fillStyle = spk.color;
-                ctx.globalAlpha = sparkAlpha;
-                ctx.fill();
-
-                // Micro-halo
-                ctx.beginPath();
-                ctx.arc(sx, sy, spk.radius * 2.5 * scaleFactor, 0, Math.PI * 2);
-                ctx.strokeStyle = spk.color;
-                ctx.globalAlpha = sparkAlpha * 0.35;
-                ctx.stroke();
-                ctx.globalAlpha = 1.0;
-            }
-
-            // ── 3. CHOSES QUI BAIGNENT : MÉDAILLONS BANCAIRES FLOTTANTS ──
+            // ── 3. TOKENS (petits logos) avec mouvement aléatoire "out of nowhere" ──
             for (let i = 0; i < TOKENS.length; i++) {
                 const tok = TOKENS[i];
 
-                // Cible de flottaison harmonique ("qui baignent")
-                const targetX = tok.relX * w + Math.cos(tick * tok.bobSpeedX + tok.phase) * tok.bobAmpX;
-                const targetY = tok.relY * h + Math.sin(tick * tok.bobSpeedY + tok.phase) * tok.bobAmpY;
-
-                if (tok.curX === null) {
-                    tok.curX = targetX;
-                    tok.curY = targetY;
-                }
-
-                // Amortissement élastique
-                tok.vx = (targetX - tok.curX) * 0.05;
-                tok.vy = (targetY - tok.curY) * 0.05;
-
-                // Répulsion physique fluide au passage du curseur
-                if (mouse.x !== null) {
-                    const dx = tok.curX - mouse.x;
-                    const dy = tok.curY - mouse.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 180 && dist > 1) {
-                        const force = (180 - dist) / 180 * 14;
-                        tok.vx += (dx / dist) * force;
-                        tok.vy += (dy / dist) * force;
+                // Gestion de l'apparition/disparition (très doux et progressif)
+                if (!tok.visible) {
+                    tok.nextAppear -= 16; // ~60fps
+                    if (tok.nextAppear <= 0) {
+                        tok.visible = true;
+                        tok.fadingOut = false;
+                        tok.lifeTime = 0;
+                        tok.curX = Math.random() * w;
+                        tok.curY = Math.random() * h;
+                        tok.vx = (Math.random() - 0.5) * 0.15;
+                        tok.vy = (Math.random() - 0.5) * 0.15;
+                        tok.opacity = 0;
+                    }
+                } else {
+                    // Fade in très doux et progressif
+                    if (!tok.fadingOut && tok.opacity < tok.targetOpacity) {
+                        tok.opacity += tok.fadeInSpeed;
+                        if (tok.opacity > tok.targetOpacity) tok.opacity = tok.targetOpacity;
+                    }
+                    // Maintenir l'opacité pendant la durée de vie
+                    else if (!tok.fadingOut) {
+                        tok.lifeTime += 16;
+                        if (tok.lifeTime >= tok.maxLifeTime) {
+                            tok.fadingOut = true;
+                        }
+                    }
+                    // Fade out très doux et progressif
+                    else if (tok.fadingOut) {
+                        tok.opacity -= tok.fadeOutSpeed;
+                        if (tok.opacity <= 0) {
+                            tok.visible = false;
+                            tok.nextAppear = Math.random() * 6000 + 3000;
+                        }
                     }
                 }
 
-                tok.curX += tok.vx;
-                tok.curY += tok.vy;
+                if (tok.visible && tok.opacity > 0.01) {
+                    // Mouvement aléatoire lent
+                    tok.curX += tok.vx;
+                    tok.curY += tok.vy;
 
-                // Balancement angulaire et respiration d'échelle
-                const rotation = Math.sin(tick * tok.rotSpeed + tok.phase) * 0.12;
-                const scale = scaleFactor * (1.0 + 0.06 * Math.sin(tick * 0.015 + tok.phase));
+                    // Rebond sur les bords
+                    if (tok.curX < 0 || tok.curX > w) tok.vx *= -1;
+                    if (tok.curY < 0 || tok.curY > h) tok.vy *= -1;
 
-                // Rendu de l'artéfact bancaire authentique
-                if (window.drawBankArtifact) {
-                    window.drawBankArtifact(ctx, {
-                        type: tok.type,
-                        x: tok.curX,
-                        y: tok.curY,
-                        size: tok.baseSize * scale,
-                        rotation: rotation
-                    });
+                    // Rotation lente
+                    const rotation = Math.sin(tick * tok.rotSpeed + tok.phase) * 0.02;
+                    const scale = scaleFactor * (1.0 + 0.005 * Math.sin(tick * 0.002 + tok.phase));
+
+                    // Rendu de l'artéfact bancaire avec transparence
+                    if (window.drawBankArtifact) {
+                        ctx.globalAlpha = tok.opacity;
+                        window.drawBankArtifact(ctx, {
+                            type: tok.type,
+                            x: tok.curX,
+                            y: tok.curY,
+                            size: tok.baseSize * scale,
+                            rotation: rotation
+                        });
+                        ctx.globalAlpha = 1.0;
+                    }
                 }
             }
 
-            // ── 4. CONDUITS PÉRIMÉTRIQUES & FLUX KAFKA (Cadrage épuré) ──
-            for (let i = 0; i < PERIMETER_NODES.length; i++) {
-                const n = PERIMETER_NODES[i];
-                n.x = n.relX * w + Math.sin(tick * 0.0015 + i) * 3;
-                n.y = n.relY * h + Math.cos(tick * 0.0018 + i) * 2.5;
-            }
+            // ── 4. PARTICULES GÉOMÉTRIQUES AVEC CONNEXIONS (style démo slide-10) ──
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                const targetX = p.originX + Math.sin(tick * p.speed + p.phase) * p.amp;
+                const targetY = p.originY + Math.cos(tick * p.speed * 0.7 + p.phase) * p.amp;
 
-            for (let i = 0; i < HIGHWAYS.length; i++) {
-                const hw = HIGHWAYS[i];
-                const f = PERIMETER_NODES[hw.from];
-                const t = PERIMETER_NODES[hw.to];
+                p.x += (targetX - p.x) * 0.012;
+                p.y += (targetY - p.y) * 0.012;
 
+                // Répulsion au passage du curseur
+                if (mouse.x !== null) {
+                    const dx = p.x - mouse.x;
+                    const dy = p.y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 220 && dist > 1) {
+                        const force = (220 - dist) / 220 * 0.015;
+                        p.x += (dx / dist) * force * 60;
+                        p.y += (dy / dist) * force * 60;
+                    }
+                }
+
+                // Rebond sur les bords
+                if (p.x < -40) { p.originX += w + 80; p.x += w + 80; }
+                if (p.x > w + 40) { p.originX -= w + 80; p.x -= w + 80; }
+                if (p.y < -40) { p.originY += h + 80; p.y += h + 80; }
+                if (p.y > h + 40) { p.originY -= h + 80; p.y -= h + 80; }
+
+                // Dessiner la particule
                 ctx.beginPath();
-                ctx.moveTo(f.x, f.y);
-                ctx.lineTo(t.x, t.y);
-                ctx.strokeStyle = 'rgba(0, 102, 204, 0.08)';
-                ctx.lineWidth = 0.8;
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.moveTo(f.x, f.y);
-                ctx.lineTo(t.x, t.y);
-                ctx.strokeStyle = 'rgba(2, 132, 199, 0.12)';
-                ctx.lineWidth = 0.8;
-                ctx.setLineDash([4, 14]);
-                ctx.lineDashOffset = -tick * 0.45;
-                ctx.stroke();
-                ctx.setLineDash([]);
-            }
-
-            // Paquets de données en transit
-            for (let i = 0; i < PACKETS.length; i++) {
-                const p = PACKETS[i];
-                const hw = HIGHWAYS[p.highwayIdx];
-                const f = PERIMETER_NODES[hw.from];
-                const t = PERIMETER_NODES[hw.to];
-
-                p.progress += hw.speed;
-                if (p.progress >= 1.0) p.progress = 0;
-
-                const curX = f.x + (t.x - f.x) * p.progress;
-                const curY = f.y + (t.y - f.y) * p.progress;
-
-                ctx.beginPath();
-                ctx.arc(curX, curY, 2.4, 0, Math.PI * 2);
-                ctx.fillStyle = p.color;
+                ctx.arc(p.x, p.y, p.r + 1.5, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 119, 204, ${0.06})`;
                 ctx.fill();
 
                 ctx.beginPath();
-                ctx.arc(curX, curY, 5.0, 0, Math.PI * 2);
-                ctx.strokeStyle = p.color;
-                ctx.globalAlpha = 0.35;
-                ctx.stroke();
-                ctx.globalAlpha = 1.0;
-            }
-
-            // Nœuds du périmètre
-            for (let i = 0; i < PERIMETER_NODES.length; i++) {
-                const n = PERIMETER_NODES[i];
-                ctx.beginPath();
-                ctx.arc(n.x, n.y, 2.6, 0, Math.PI * 2);
-                ctx.fillStyle = n.color;
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 119, 204, ${0.14})`;
                 ctx.fill();
+
+                // Dessiner les connexions entre particules proches
+                for (let j = i + 1; j < particles.length; j++) {
+                    const q = particles[j];
+                    const dx = p.x - q.x;
+                    const dy = p.y - q.y;
+                    const distSq = dx * dx + dy * dy;
+
+                    if (distSq < LINK_DIST * LINK_DIST) {
+                        const dist = Math.sqrt(distSq);
+                        const alpha = 0.035 * (1 - dist / LINK_DIST);
+
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(q.x, q.y);
+                        ctx.strokeStyle = `rgba(0, 119, 204, ${alpha})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
             }
 
-            requestAnimationFrame(renderFrame);
+            if (!prefersReduced) requestAnimationFrame(renderFrame);
         }
 
         requestAnimationFrame(renderFrame);
@@ -896,7 +868,7 @@
     /* ── Utility: smoothly reveal an element with modern fintech curve ── */
     function reveal(el, delay, duration, easing) {
         if (!el) return;
-        duration = duration || 650;
+        duration = duration || 900;
         easing   = easing   || 'cubic-bezier(0.16, 1, 0.3, 1)';
         setTimeout(function () {
             el.style.transition = `opacity ${duration}ms ${easing}, transform ${duration}ms ${easing}`;
@@ -912,7 +884,7 @@
         spotlight.className = 'finbank-spotlight';
         spotlight.style.cssText = [
             'position:fixed;inset:0;pointer-events:none;z-index:1;',
-            'background:radial-gradient(750px circle at 50% 50%, rgba(0,119,204,0.065), rgba(16,185,129,0.035), transparent 70%);',
+            'background:radial-gradient(550px circle at 50% 50%, rgba(0,119,204,0.035), rgba(16,185,129,0.02), transparent 70%);',
             'opacity:0;transition:opacity 0.8s ease;',
             'will-change:background;'
         ].join('');
@@ -934,9 +906,9 @@
         });
 
         function updateSpotlight() {
-            curX += (mouseX - curX) * 0.08;
-            curY += (mouseY - curY) * 0.08;
-            spotlight.style.background = `radial-gradient(750px circle at ${curX.toFixed(1)}px ${curY.toFixed(1)}px, rgba(0,119,204,0.07), rgba(16,185,129,0.035), transparent 70%)`;
+            curX += (mouseX - curX) * 0.04;
+            curY += (mouseY - curY) * 0.04;
+            spotlight.style.background = `radial-gradient(550px circle at ${curX.toFixed(1)}px ${curY.toFixed(1)}px, rgba(0,119,204,0.04), rgba(16,185,129,0.02), transparent 70%)`;
             raf = requestAnimationFrame(updateSpotlight);
         }
         updateSpotlight();
@@ -951,13 +923,13 @@
         let targetX = 0, targetY = 0, curX = 0, curY = 0;
 
         document.addEventListener('mousemove', function (e) {
-            targetX = (e.clientX / window.innerWidth  - 0.5) * 36;
-            targetY = (e.clientY / window.innerHeight - 0.5) * 24;
+            targetX = (e.clientX / window.innerWidth  - 0.5) * 12;
+            targetY = (e.clientY / window.innerHeight - 0.5) * 8;
         });
 
         function loop() {
-            curX += (targetX - curX) * 0.05;
-            curY += (targetY - curY) * 0.05;
+            curX += (targetX - curX) * 0.03;
+            curY += (targetY - curY) * 0.03;
             orbs.forEach(function (orb, i) {
                 const factor = 0.8 + i * 0.45;
                 orb.style.transform = `translate(${curX * factor}px, ${curY * factor}px)`;
@@ -982,27 +954,27 @@
         }
 
         /* 1. Header elements (rapid, high-precision) */
-        reveal(document.querySelector('.slide__eyebrow'),  60, 500);
-        reveal(document.querySelector('.slide__header'),   100, 600);
-        reveal(document.querySelector('.slide__title'),    150, 700);
-        reveal(document.querySelector('.slide__subtitle'), 240, 600);
+        reveal(document.querySelector('.slide__eyebrow'),  60, 800);
+        reveal(document.querySelector('.slide__header'),   100, 900);
+        reveal(document.querySelector('.slide__title'),    150, 950);
+        reveal(document.querySelector('.slide__subtitle'), 240, 850);
 
         /* 2. Cover-specific */
-        reveal(document.querySelector('.cover__header'),   100, 600);
-        reveal(document.querySelector('.cover__main'),     250, 800);
-        reveal(document.querySelector('.cover__footer'),   500, 650);
+        reveal(document.querySelector('.cover__header'),   100, 900);
+        reveal(document.querySelector('.cover__main'),     250, 1000);
+        reveal(document.querySelector('.cover__footer'),   500, 900);
 
         /* 3. Plan slide */
-        reveal(document.querySelector('.plan__header'),    100, 600);
-        reveal(document.querySelector('.plan__connector'), 300, 500);
+        reveal(document.querySelector('.plan__header'),    100, 900);
+        reveal(document.querySelector('.plan__connector'), 300, 800);
         const planCards = document.querySelectorAll('.plan__card');
-        planCards.forEach(function (el, i) { reveal(el, 320 + i * 50, 550); });
+        planCards.forEach(function (el, i) { reveal(el, 320 + i * 90, 850); });
 
         /* 4. Section dividers */
-        reveal(document.querySelector('.section__eyebrow'), 80, 500);
-        reveal(document.querySelector('.section__number'),  120, 600);
-        reveal(document.querySelector('.section__title'),   220, 750);
-        reveal(document.querySelector('.section__line'),    320, 650);
+        reveal(document.querySelector('.section__eyebrow'), 80, 800);
+        reveal(document.querySelector('.section__number'),  120, 900);
+        reveal(document.querySelector('.section__title'),   220, 950);
+        reveal(document.querySelector('.section__line'),    320, 900);
 
         /* 5. Generic content areas & panels */
         ['content-wrapper','content-split','content-grid',
@@ -1011,22 +983,22 @@
          'arch-panel','gallery__panel','interface-showcase',
          'cicd-panel','releases','concl-summary','persp-grid',
          'merci-content','demo-content'].forEach(function (cls) {
-            reveal(document.querySelector('.' + cls), 280, 650);
+            reveal(document.querySelector('.' + cls), 280, 900);
         });
 
         /* 6. Staggered children marked with data-delay */
         document.querySelectorAll('[data-delay]').forEach(function (el) {
             const d = parseInt(el.getAttribute('data-delay'), 10) || 0;
-            reveal(el, 260 + d * 70, 550);
+            reveal(el, 260 + d * 100, 850);
         });
 
         /* 7. Devices & interface showcases */
         document.querySelectorAll('.device').forEach(function (el, i) {
-            reveal(el, 300 + i * 120, 750);
+            reveal(el, 300 + i * 150, 950);
         });
 
         /* 8. Navigation footer pill */
-        reveal(document.querySelector('.navigation'), 600, 500);
+        reveal(document.querySelector('.navigation'), 600, 800);
     }
 
     /* ── Initialize ── */

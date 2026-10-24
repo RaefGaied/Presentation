@@ -3,50 +3,60 @@
    Injected across all 34 slides for consistent banking theme
    ═══════════════════════════════════════════════════════════ */
 
-/* ── Host / Partner Logo (Top Right) ── */
+/* ── Compact FinBank wordmark (Top Right) ── */
 .slide-logo {
     position: fixed;
-    top: 1.1rem;
-    right: 1.3rem;
-    width: 44px;
-    height: 44px;
-    object-fit: contain;
+    top: 1rem;
+    right: 1.15rem;
+    min-width: 0;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    font: 700 0.78rem/1 'Outfit', sans-serif;
+    letter-spacing: -0.04em;
     z-index: 200;
     opacity: 0;
-    border-radius: 10px !important;
-    background: rgba(255, 255, 255, 0.92) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    padding: 4px;
-    box-shadow: 0 6px 20px rgba(0, 102, 204, 0.14), 0 0 0 1px rgba(0, 102, 204, 0.18) !important;
-    animation: finbankLogoIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards, finbankLogoFloat 6s ease-in-out 1.2s infinite alternate !important;
+    border-radius: 7px !important;
+    background: rgba(255, 255, 255, 0.84) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    padding: 0 8px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(148, 163, 184, 0.2) !important;
+    animation: finbankLogoIn 0.45s ease 0.2s forwards !important;
     pointer-events: auto;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease !important;
+    transition: box-shadow 0.2s ease !important;
 }
+.slide-logo__fin { color: #0066cc; }
+.slide-logo__bank { color: #0f172a; }
 .slide-logo:hover {
-    transform: translateY(-2px) scale(1.05) !important;
-    box-shadow: 0 10px 26px rgba(0, 102, 204, 0.22), 0 0 0 1.5px rgba(232, 97, 26, 0.4) !important;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.14), 0 0 0 1px rgba(0, 102, 204, 0.2) !important;
 }
 @keyframes finbankLogoIn {
-    0%   { opacity: 0; transform: translateY(-16px) scale(0.85); filter: blur(4px); }
-    70%  { opacity: 0.95; transform: translateY(1px) scale(1.02); filter: blur(0px); }
-    100% { opacity: 0.98; transform: translateY(0) scale(1); filter: blur(0px); }
-}
-@keyframes finbankLogoFloat {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-4px); }
+    from { opacity: 0; }
+    to { opacity: 0.96; }
 }
 
 /* ── FinBank Ambient Orbs Palette (Banking Blue, Emerald, Vermeg Amber) ── */
 .ambient-orb.orb-1 {
-    background: radial-gradient(circle, rgba(0, 102, 204, 0.22) 0%, transparent 70%) !important;
+    background: radial-gradient(circle, rgba(0, 102, 204, 0.08) 0%, transparent 70%) !important;
 }
 .ambient-orb.orb-2 {
-    background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, transparent 70%) !important;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.07) 0%, transparent 70%) !important;
 }
 .ambient-orb.orb-3 {
-    background: radial-gradient(circle, rgba(234, 88, 12, 0.13) 0%, transparent 70%) !important;
+    background: radial-gradient(circle, rgba(234, 88, 12, 0.06) 0%, transparent 70%) !important;
 }
+.ambient-orb {
+    width: min(24vw, 220px) !important;
+    height: min(24vw, 220px) !important;
+    filter: blur(70px) !important;
+    animation-duration: 78s, 1.2s !important;
+}
+@keyframes orbFloat1 { to { transform: translate(-8px, 8px); } }
+@keyframes orbFloat2 { to { transform: translate(6px, -8px); } }
+@keyframes orbFloat3 { to { transform: translate(5px, 6px); } }
 
 /* ── High-Precision Fintech Page Counter Pill ── */
 .navigation {
@@ -101,9 +111,9 @@
     left: 0 !important;
     height: 3.5px !important;
     z-index: 9000 !important;
-    background: linear-gradient(90deg, #0066cc 0%, #0284c7 35%, #10b981 75%, #ea580c 100%) !important;
+    background: linear-gradient(90deg, #ea580c 0%, #f97316 35%, #fbbf24 75%, #0066cc 100%) !important;
     border-radius: 0 4px 4px 0 !important;
-    box-shadow: 0 0 12px rgba(0, 102, 204, 0.6), 0 0 4px rgba(16, 185, 129, 0.8) !important;
+    box-shadow: 0 0 12px rgba(234, 88, 12, 0.6), 0 0 4px rgba(249, 115, 22, 0.8) !important;
     transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease !important;
 }
 
@@ -138,15 +148,15 @@
 
 /* ── Section Title & Number Glowing Accent ── */
 .section__number {
-    background: linear-gradient(135deg, #0066cc 0%, #0284c7 50%, #10b981 100%) !important;
+    background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #fbbf24 100%) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
-    filter: drop-shadow(0 4px 18px rgba(0, 102, 204, 0.25));
+    filter: drop-shadow(0 4px 18px rgba(234, 88, 12, 0.25));
 }
 
 .section__line {
-    background: linear-gradient(90deg, #0066cc 0%, #10b981 50%, #ea580c 100%) !important;
-    box-shadow: 0 0 12px rgba(0, 102, 204, 0.4);
+    background: linear-gradient(90deg, #ea580c 0%, #f97316 50%, #fbbf24 100%) !important;
+    box-shadow: 0 0 12px rgba(234, 88, 12, 0.4);
     animation: finbankLineExpand 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 @keyframes finbankLineExpand {

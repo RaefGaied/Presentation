@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   Slide 05 : Cadre Général du Projet FinBank (Pop-Out Interactivity)
+   Slide 05 : Cadre Général - Le Paysage Bancaire Numérique
    ═══════════════════════════════════════════════════════════════ */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,35 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ═══════════════════════════════════════════════════════════
-       3D POP-OUT CARD TILT
-       ═══════════════════════════════════════════════════════════ */
-    const card = document.getElementById('finbankCard');
-    const img  = document.getElementById('finbankImg');
-
-    if (card && !prefersReduced) {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const cx = rect.width / 2;
-            const cy = rect.height / 2;
-            const rotateX = ((y - cy) / cy) * -6;
-            const rotateY = ((x - cx) / cx) * 6;
-            card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
-            if (img) {
-                img.style.transform = `translateZ(65px) rotateX(${rotateX * 0.4}deg) rotateY(${rotateY * 0.4}deg) scale(1.03)`;
-            }
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1)';
-            if (img) {
-                img.style.transform = 'translateZ(45px) scale(1)';
-            }
-        });
-    }
-
-    /* ═══════════════════════════════════════════════════════════
        ENTRANCE SEQUENCE
        ═══════════════════════════════════════════════════════════ */
     if (prefersReduced) return;
@@ -50,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const header   = document.querySelector('.slide__header');
     const title    = document.querySelector('.slide__title');
     const subtitle = document.querySelector('.slide__subtitle');
-    const showcase = document.querySelector('.finbank-showcase');
+    const grid     = document.querySelector('.scenario-grid');
     const nav      = document.querySelector('.navigation');
 
     const setTransition = (el, props, delay) => {
@@ -74,11 +45,21 @@ document.addEventListener('DOMContentLoaded', () => {
     setTransition(subtitle,
         'opacity 0.7s ease, transform 0.7s ease', 650);
 
-    // 4. Pop-out showcase card
-    setTransition(showcase,
+    // 4. Scenario grid with staggered cards
+    setTransition(grid,
         'opacity 1s cubic-bezier(0.22,1,0.36,1), transform 1.1s cubic-bezier(0.22,1,0.36,1)', 900);
+
+    // Stagger individual cards
+    const cards = document.querySelectorAll('.scenario-card');
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'none';
+        }, 1100 + (index * 150));
+    });
 
     // 5. Navigation
     setTransition(nav,
-        'opacity 0.8s ease, transform 0.8s ease', 1600);
+        'opacity 0.8s ease, transform 0.8s ease', 1800);
 });

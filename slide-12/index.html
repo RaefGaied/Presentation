@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slide 12 : Analyse et spécification des besoins</title>
+    <title>Slide 12 : Besoins fonctionnels</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../nav-hint.css">
+    <link rel="stylesheet" href="../calm-override.css">
 </head>
 <body>
     <canvas id="bg-canvas"></canvas>
@@ -19,69 +20,81 @@
     <div class="slide">
 
         <header class="slide__header">
-            <h1 class="slide__title">Analyse et spécification des besoins</h1>
+            <h1 class="slide__title">Besoins fonctionnels</h1>
         </header>
 
         <div class="needs-table">
             <div class="needs-table__header">
                 <div class="needs-table__badge">
                     <span class="needs-table__badge-dot"></span>
-                    Besoins fonctionnels par acteur
+                    Exigences fonctionnelles et règles de gestion
                 </div>
             </div>
 
             <div class="needs-table__grid">
                 <div class="needs-table__row needs-table__row--head">
-                    <div class="needs-table__cell">Acteur</div>
-                    <div class="needs-table__cell">R&ocirc;le principal</div>
-                    <div class="needs-table__cell">Besoins fonctionnels cl&eacute;s</div>
+                    <div class="needs-table__cell">ID</div>
+                    <div class="needs-table__cell">Exigence</div>
+                    <div class="needs-table__cell">Comportement attendu</div>
                 </div>
 
                 <div class="needs-table__row needs-table__row--emerald" data-delay="0">
                     <div class="needs-table__cell needs-table__cell--actor">
-                        <span class="needs-table__dot needs-table__dot--emerald"></span>
-                        Client Bancaire
+                        FR-01
                     </div>
-                    <div class="needs-table__cell needs-table__cell--role">Utilisateur des services financiers</div>
+                    <div class="needs-table__cell needs-table__cell--role">Consultation des comptes</div>
                     <div class="needs-table__cell needs-table__cell--needs">
-                        <ul class="needs-table__list">
-                            <li>Consultation des comptes, soldes en temps r&eacute;el et historique</li>
-                            <li>Ex&eacute;cution de virements (alerte automatique si &gt; seuil)</li>
-                            <li>Gestion des cartes &amp; d&eacute;voilement s&eacute;curis&eacute; (CVV/num&eacute;ro)</li>
-                            <li>Interaction avec l'assistant IA RAG sur les r&egrave;gles et plafonds</li>
-                        </ul>
+                        <p>Un client authentifi&eacute; consulte ses comptes, ses soldes et son historique.</p>
                     </div>
                 </div>
 
                 <div class="needs-table__row needs-table__row--indigo" data-delay="1">
                     <div class="needs-table__cell needs-table__cell--actor">
-                        <span class="needs-table__dot needs-table__dot--indigo"></span>
-                        Administrateur
+                        FR-02
                     </div>
-                    <div class="needs-table__cell needs-table__cell--role">Supervision, conformit&eacute; et validation</div>
+                    <div class="needs-table__cell needs-table__cell--role">Virements courants</div>
                     <div class="needs-table__cell needs-table__cell--needs">
-                        <ul class="needs-table__list">
-                            <li>Approbation ou rejet des virements sensibles via Flowable BPMN</li>
-                            <li>Supervision globale des comptes et des utilisateurs</li>
-                            <li>Consultation des &eacute;v&eacute;nements d'audit et alertes de s&eacute;curit&eacute;</li>
-                            <li>Configuration des param&egrave;tres et des seuils bancaires</li>
-                        </ul>
+                        <p>Un virement ne d&eacute;passant pas 5&nbsp;000 TND est trait&eacute; selon le parcours courant du prototype.</p>
                     </div>
                 </div>
 
                 <div class="needs-table__row needs-table__row--purple" data-delay="2">
                     <div class="needs-table__cell needs-table__cell--actor">
-                        <span class="needs-table__dot needs-table__dot--purple"></span>
-                        Syst&egrave;me &amp; Agent IA
+                        FR-03
                     </div>
-                    <div class="needs-table__cell needs-table__cell--role">Orchestration et intelligence m&eacute;tier</div>
+                    <div class="needs-table__cell needs-table__cell--role">Virements sensibles</div>
                     <div class="needs-table__cell needs-table__cell--needs">
-                        <ul class="needs-table__list">
-                            <li>D&eacute;tection automatique du d&eacute;passement de seuil (&gt; 5 000 TND)</li>
-                            <li>D&eacute;clenchement et synchronisation du processus Flowable</li>
-                            <li>Recherche documentaire vectorielle et g&eacute;n&eacute;ration RAG</li>
-                            <li>Journalisation immuable de chaque op&eacute;ration sensible</li>
-                        </ul>
+                        <p>Au-del&agrave; de 5&nbsp;000 TND, le virement reste en attente et suit un processus de validation avant son traitement.</p>
+                    </div>
+                </div>
+
+                <div class="needs-table__row needs-table__row--orange" data-delay="3">
+                    <div class="needs-table__cell needs-table__cell--actor">
+                        FR-04
+                    </div>
+                    <div class="needs-table__cell needs-table__cell--role">Protection des cartes</div>
+                    <div class="needs-table__cell needs-table__cell--needs">
+                        <p>Le client acc&egrave;de aux d&eacute;tails de sa carte apr&egrave;s v&eacute;rification de son mot de passe ; les donn&eacute;es affich&eacute;es sont simul&eacute;es.</p>
+                    </div>
+                </div>
+
+                <div class="needs-table__row needs-table__row--blue" data-delay="4">
+                    <div class="needs-table__cell needs-table__cell--actor">
+                        FR-05
+                    </div>
+                    <div class="needs-table__cell needs-table__cell--role">Assistance documentaire</div>
+                    <div class="needs-table__cell needs-table__cell--needs">
+                        <p>L'assistant recherche des informations pertinentes dans la base documentaire pour contextualiser ses r&eacute;ponses.</p>
+                    </div>
+                </div>
+
+                <div class="needs-table__row needs-table__row--blue" data-delay="5">
+                    <div class="needs-table__cell needs-table__cell--actor">
+                        FR-06
+                    </div>
+                    <div class="needs-table__cell needs-table__cell--role">Aide et support</div>
+                    <div class="needs-table__cell needs-table__cell--needs">
+                        <p>Le client cr&eacute;e un ticket, en suit le statut et re&ccedil;oit les r&eacute;ponses ou notifications ; le support peut le traiter et le cl&ocirc;turer.</p>
                     </div>
                 </div>
             </div>

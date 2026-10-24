@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slide 16 : Interface Reels</title>
+    <title>Slide 25 : Interface des virements bancaires</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../nav-hint.css">
+    <link rel="stylesheet" href="../calm-override.css">
 </head>
 <body>
     <canvas id="bg-canvas"></canvas>
@@ -32,20 +33,25 @@
                         <div class="browser-url">finbank.local/transfers</div>
                     </div>
                     <div class="device__screen">
-                        <img src="../assets/ui_demande_virement_important.png" alt="Demande de Virement Important FinBank">
+                        <img src="../assets/ui_demande_virement_important.png" alt="Demande de virement important FinBank">
                     </div>
                 </div>
-                <span class="device__label">Portail Client Web &mdash; Virement &gt; 5 000 TND</span>
+                <span class="device__label">Portail Client Web — virement &gt; 5 000 TND</span>
             </div>
 
-            <div class="device device--mobile" data-delay="2">
+            <div class="device device--web device--web-secondary" data-delay="2">
                 <div class="device__frame">
-                    <div class="device__notch"></div>
+                    <div class="browser-chrome browser-chrome--application">
+                        <div class="browser-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="browser-url">Camunda Modeler · Validation de virement</div>
+                    </div>
                     <div class="device__screen">
-                        <img src="../assets/workflow-virement.png" alt="Workflow BPMN Flowable">
+                        <img src="../assets/workflow-virement.png" alt="Workflow BPMN de validation d'un virement important">
                     </div>
                 </div>
-                <span class="device__label">Circuit d'Approbation Flowable</span>
+                <span class="device__label">Circuit d'approbation Flowable</span>
             </div>
         </div>
 

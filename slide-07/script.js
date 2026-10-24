@@ -25,23 +25,23 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     setT(document.querySelector('.slide__header'),
-        'opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1)', 200);
+        'opacity 1.2s cubic-bezier(0.22,1,0.36,1), transform 1.2s cubic-bezier(0.22,1,0.36,1)', 200);
     setT(document.querySelector('.slide__title'),
-        'opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1)', 500);
+        'opacity 1.2s cubic-bezier(0.22,1,0.36,1), transform 1.2s cubic-bezier(0.22,1,0.36,1)', 500);
     setT(document.querySelector('.slide__subtitle'),
-        'opacity 0.7s ease, transform 0.7s ease', 800);
+        'opacity 1s ease, transform 1s ease', 800);
 
     document.querySelectorAll('.row--top .plat').forEach((c, i) => {
-        setT(c, 'opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1)', 1000 + i * 150);
+        setT(c, 'opacity 1.1s cubic-bezier(0.22,1,0.36,1), transform 1.1s cubic-bezier(0.22,1,0.36,1)', 1000 + i * 220);
     });
 
     document.querySelectorAll('.row--bottom .plat').forEach((c, i) => {
-        setT(c, 'opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1)', 1500 + i * 120);
+        setT(c, 'opacity 1s cubic-bezier(0.22,1,0.36,1), transform 1s cubic-bezier(0.22,1,0.36,1)', 1700 + i * 180);
     });
 
     setT(document.querySelector('.gap-card'),
-        'opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1)', 1700);
+        'opacity 1.1s cubic-bezier(0.22,1,0.36,1), transform 1.1s cubic-bezier(0.22,1,0.36,1)', 1900);
 
     setT(document.querySelector('.navigation'),
-        'opacity 0.8s ease, transform 0.8s ease', 2300);
+        'opacity 1s ease, transform 1s ease', 2500);
 });

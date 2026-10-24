@@ -68,7 +68,7 @@ html, body {
 .slide__header {
     text-align: center;
     opacity: 0;
-    transform: translateY(-25px);
+    transform: translateY(-12px);
 }
 
 .slide__title {
@@ -79,7 +79,7 @@ html, body {
     letter-spacing: -0.02em;
     line-height: 1.1;
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(8px);
 }
 .slide__title::after {
     content: '';
@@ -90,7 +90,7 @@ html, body {
     border-radius: 3px;
     margin: 16px auto 0;
     transform: scaleX(0);
-    animation: lineGrow 0.7s ease 1s forwards;
+    animation: lineGrow 1.2s ease 1s forwards;
 }
 @keyframes lineGrow { to { transform: scaleX(1); } }
 
@@ -100,7 +100,7 @@ html, body {
     margin-top: 14px;
     font-weight: 400;
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(5px);
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
@@ -130,7 +130,7 @@ html, body {
    ═══════════════════════════════════════════════════════════════ */
 .plat {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(16px);
     display: flex;
 }
 
@@ -142,7 +142,7 @@ html, body {
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 20px rgba(15,23,42,0.06), 0 1px 4px rgba(15,23,42,0.03);
-    transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease;
+    transition: transform 0.8s cubic-bezier(0.22,1,0.36,1), box-shadow 0.8s ease;
     position: relative;
 }
 
@@ -189,15 +189,15 @@ html, body {
     height: 100%;
     object-fit: cover;
     object-position: top center;
-    transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    transition: transform 1s cubic-bezier(0.22,1,0.36,1);
 }
 
 .plat__card:hover .plat__img {
-    transform: scale(1.07);
+    transform: scale(1.03);
 }
 
 .plat__card:hover {
-    transform: translateY(-8px) scale(1.015);
+    transform: translateY(-3px) scale(1.005);
     box-shadow: 0 20px 56px rgba(15,23,42,0.13), 0 4px 14px rgba(15,23,42,0.06);
 }
 
@@ -264,7 +264,7 @@ html, body {
    ═══════════════════════════════════════════════════════════════ */
 .gap-card {
     opacity: 0;
-    transform: translateY(30px) scale(0.97);
+    transform: translateY(14px) scale(0.99);
     display: flex;
 }
 
@@ -346,11 +346,11 @@ html, body {
     padding: 0.5rem 1.1rem;
     border-radius: 100px;
     white-space: nowrap;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.7s ease, box-shadow 0.7s ease;
 }
 
 .gap-tag:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 

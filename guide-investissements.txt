@@ -1,0 +1,68 @@
+COMPRENDRE LA PAGE « INVESTISSEMENTS » DE FINBANK
+
+Ce document explique les notions visibles sur la capture de la page d'investissement en utilisant des catégories compréhensibles à l'international. FinBank est un prototype : les produits, les taux et les projections affichés servent à illustrer le fonctionnement de l'interface. Ils ne constituent ni une offre réelle ni un conseil financier.
+
+1. LES TROIS INDICATEURS EN HAUT
+
+Capital investi
+C'est la somme d'argent placée au départ dans les investissements qui sont encore actifs. Sur la capture, le montant est de 0,00 dans la devise configurée par l'interface : aucun placement actif n'a encore été créé.
+
+Valorisation actuelle
+C'est la valeur estimée des placements actifs à la date affichée. Elle peut être supérieure ou inférieure au capital investi selon l'évolution du placement. Ici, elle est aussi de 0,00, car il n'y a aucun placement actif.
+
+Plus-value nette
+C'est le gain ou la perte associé aux placements clôturés. Un montant positif indique un gain ; un montant négatif indique une perte. Ici, +0,00 signifie qu'aucun gain n'est enregistré.
+
+La capture fournie affiche le symbole R$, qui désigne le réal brésilien. Pour une présentation à portée internationale, il vaut mieux parler de « devise affichée » ou de « montant simulé », sans présenter R$ comme une monnaie mondiale. Si le projet cible réellement plusieurs pays, la devise devrait être choisie selon le pays ou le compte.
+
+2. LE SIMULATEUR D'INTÉRÊTS COMPOSÉS
+
+Le simulateur permet d'estimer comment une somme pourrait évoluer avec le temps si les gains sont réinvestis.
+
+- Apport initial : somme placée au début.
+- Versement mensuel : somme ajoutée chaque mois.
+- Horizon temporel : durée de la simulation.
+- Produit : type de placement et taux utilisé par le simulateur.
+- Total déposé : apport initial + versements ajoutés.
+- Intérêts générés : gain estimé par la simulation.
+- Patrimoine final : total déposé + gain estimé.
+- Rente mensuelle : estimation indicative d'un revenu mensuel potentiel ; ce n'est pas une somme garantie.
+
+Exemple visible sur la capture : 5 000 unités monétaires au départ, puis 500 unités par mois pendant 24 mois. Le total déposé est de 17 000 unités (5 000 + 500 x 24). Le simulateur affiche ensuite une projection de gain et une valeur finale. Cette projection dépend des hypothèses choisies ; le résultat réel peut être différent.
+
+3. LES CATÉGORIES D'INVESTISSEMENT DERRIÈRE CDB, LCI ET LCA
+
+Le prototype affiche les noms CDB, LCI et LCA, qui viennent du marché brésilien. Pour expliquer les idées de manière internationale, on peut les rapprocher des catégories générales suivantes. Ce sont des analogies de fonctionnement, pas des équivalences juridiques exactes : les noms, garanties, taux, fiscalité et conditions varient selon les pays.
+
+Placement bancaire à revenu fixe (libellé affiché : CDB)
+Un client place de l'argent auprès d'une banque pour une durée et selon des conditions définies ; la banque rémunère ce placement. Selon le pays, des exemples peuvent être un dépôt à terme ou un certificat de dépôt. Le taux, la durée, les possibilités de retrait et les éventuelles garanties dépendent du produit et de la réglementation locale. Ce type de placement n'est pas automatiquement sans risque.
+
+Placement adossé au financement immobilier (libellé affiché : LCI)
+Il s'agit, de façon générale, d'un titre ou d'un placement lié au financement de l'immobilier. Les produits disponibles et leur structure varient selon les pays ; il ne faut donc pas supposer qu'il existe partout un produit identique à la LCI.
+
+Placement adossé au financement agricole (libellé affiché : LCA)
+Il s'agit, de façon générale, d'un titre ou d'un placement lié au financement de l'agriculture ou de l'agro-industrie. Là encore, les règles, les risques et les produits disponibles dépendent du pays ; il n'existe pas d'équivalent universel exact.
+
+Pour une explication worldwide, présente donc les catégories générales (placement bancaire à revenu fixe, financement immobilier et financement agricole), puis précise que CDB, LCI et LCA sont les noms visibles dans les données de démonstration du prototype.
+
+4. LES AUTRES PRODUITS AFFICHÉS
+
+Obligations souveraines
+Titres de dette émis par un État pour financer ses activités. Les appellations et les risques dépendent du pays, de la durée et des conditions de marché ; « risque très faible » ne signifie pas « aucun risque ».
+
+Global Equities Basket
+Panier d'actions d'entreprises. La valeur peut monter ou baisser ; le rendement n'est pas fixe et le capital peut subir des pertes. Le taux précédé du signe ~ (« environ ») est une estimation illustrative, pas une promesse.
+
+5. COMMENT LIRE « % p.a. » ET « TAX-FREE » ?
+
+« p.a. » signifie « par an » (per annum). Par exemple, 12 % p.a. désigne un taux annuel affiché, mais ne permet pas à lui seul de connaître le gain net : il faut aussi connaître la durée, la méthode de calcul, les frais, les impôts et les conditions de retrait.
+
+« Tax-free » veut dire « exonéré d'impôt » dans le libellé de l'interface. Cette mention dépend du pays, du profil de l'investisseur, du produit et de la réglementation. Ne pas la présenter comme une règle valable partout. Pour une explication internationale, parler plutôt d'un éventuel traitement fiscal avantageux, qui doit être vérifié selon la juridiction concernée.
+
+6. QUE DIRE PENDANT LA SOUTENANCE ?
+
+« Cette page illustre un module de suivi et de simulation d'investissements. Elle présente le capital placé, une valorisation estimée et des projections selon plusieurs paramètres. Les catégories présentées couvrent des placements bancaires à revenu fixe, des financements liés à l'immobilier ou à l'agriculture, des obligations souveraines et des actions. Les produits et les taux sont des données de démonstration du prototype : ils ne représentent pas une offre réelle et ne garantissent aucun rendement. Les sigles CDB, LCI et LCA sont conservés comme libellés de démonstration, mais leurs équivalents exacts varient selon les pays. »
+
+POINT DE VIGILANCE POUR LA PRÉSENTATION
+
+La capture affiche des montants en R$ et des noms de produits issus du marché brésilien, alors que d'autres parties de la présentation parlent de TND. Si tu veux expliquer les notions worldwide, utilise les catégories générales décrites ci-dessus et précise que la capture contient des données de démonstration. Ne présente pas les taux comme des rendements garantis. La bande d'indices de marché visible dans l'interface est également une illustration du prototype ; ne pas affirmer qu'elle fournit des cotations en temps réel sans l'avoir vérifié.
